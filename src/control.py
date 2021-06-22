@@ -5,7 +5,6 @@ import view
 from PyQt5 import QtWidgets, QtCore
 import cartas
 import threading
-import viewmanagement
 import jogador
 
 class Control(QtWidgets.QWidget, view.Ui_ElementPo):
@@ -33,62 +32,6 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self.Jogador2 = jogador.Jogador([], 0, 0)
 
         self.iniciarJogo.clicked.connect(self.threadRun)
-
-    #CONTROLE DE UI
-    def esconderCartas2(self):
-        self.carta6.hide()
-        self.carta7.hide()
-        self.carta8.hide()
-        self.carta9.hide()
-        self.carta10.hide()
-
-    def esconderCartas1(self):
-        self.carta1.hide()
-        self.carta2.hide()
-        self.carta3.hide()
-        self.carta4.hide()
-        self.carta5.hide()
-
-    def mostrarCartas2(self):
-        self.carta6.show()
-        self.carta7.show()
-        self.carta8.show()
-        self.carta9.show()
-        self.carta10.show()
-
-    def mostrarCartas1(self):
-        self.carta1.show()
-        self.carta2.show()
-        self.carta3.show()
-        self.carta4.show()
-        self.carta5.show()
-
-    def mostrarCartasEscolhidas(self):
-        self.label.show()
-        self.label_2.show()
-
-        self.label.setText(self._translate(self.label.text(), "Carta 1"))
-        self.label_2.setText(self._translate(self.label_2.text(), "Carta 2"))
-
-    def desabilitarBotoes(self):
-        self.carta1.setEnabled(False)
-        self.carta2.setEnabled(False)
-        self.carta3.setEnabled(False)
-        self.carta4.setEnabled(False)
-        self.carta5.setEnabled(False)
-        self.carta6.setEnabled(False)
-        self.carta7.setEnabled(False)
-        self.carta8.setEnabled(False)
-        self.carta9.setEnabled(False)
-        self.carta10.setEnabled(False)
-
-    def inicioJogo_UI(self):
-        self.iniciarJogo.hide()
-        self.mostrarCartas1()
-        self.mostrarCartasEscolhidas()
-        self.label_3.setText(self._translate(self.label_3.text(), "Placar"))
-        self.ponto_Jogador1.setText(self._translate(self.ponto_Jogador1.text(), "0"))
-        self.pontos_Jogador2.setText(self._translate(self.pontos_Jogador2.text(), "0"))
 
     #CONTROLE DAS REGRAS DO JOGO
     def threadRun(self): #running threads
@@ -244,7 +187,7 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
             self.estadoJogo.aumentarTurno()
 
         #verificaçãoEmpate
-        if self.Jogador1.pontuacao == self.Jogador2:
+        if self.Jogador1.pontuacao == self.Jogador2.pontuacao:
             vencedor = "Essa partida foi um empate."
 
         #remover cartas do jogo

@@ -1,13 +1,6 @@
 import sys
 import control
-import view
-from PyQt5 import QtWidgets, QtCore
-
-class Main(QtWidgets.QWidget, view.Ui_ElementPo):
-
-    def __init__(self, parent=None):
-        super(Main, self).__init__(parent)
-        self.setupUi(self)
+from PyQt5 import QtWidgets
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

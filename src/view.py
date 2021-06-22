@@ -121,7 +121,6 @@ class Ui_ElementPo(object):
         self.carta9.setEnabled(True)
         self.carta10.setEnabled(True)
 
-
     def retranslateUi(self, ElementPo):
         _translate = QtCore.QCoreApplication.translate
         ElementPo.setWindowTitle(_translate("ElementPo", "Element PO"))
@@ -142,6 +141,62 @@ class Ui_ElementPo(object):
         self.label_3.setText(_translate("ElementPo", "Placar"))
         self.iniciarJogo.setText(_translate("ElementPo", "Iniciar jogo"))
 
+    def esconderCartas2(self):
+        self.carta6.hide()
+        self.carta7.hide()
+        self.carta8.hide()
+        self.carta9.hide()
+        self.carta10.hide()
+
+    def esconderCartas1(self):
+        self.carta1.hide()
+        self.carta2.hide()
+        self.carta3.hide()
+        self.carta4.hide()
+        self.carta5.hide()
+
+    def mostrarCartas2(self):
+        self.carta6.show()
+        self.carta7.show()
+        self.carta8.show()
+        self.carta9.show()
+        self.carta10.show()
+
+    def mostrarCartas1(self):
+        self.carta1.show()
+        self.carta2.show()
+        self.carta3.show()
+        self.carta4.show()
+        self.carta5.show()
+
+    def mostrarCartasEscolhidas(self):
+        _translate = QtCore.QCoreApplication.translate
+        self.label.show()
+        self.label_2.show()
+
+        self.label.setText(_translate(self.label.text(), "Carta 1"))
+        self.label_2.setText(_translate(self.label_2.text(), "Carta 2"))
+
+    def desabilitarBotoes(self):
+        self.carta1.setEnabled(False)
+        self.carta2.setEnabled(False)
+        self.carta3.setEnabled(False)
+        self.carta4.setEnabled(False)
+        self.carta5.setEnabled(False)
+        self.carta6.setEnabled(False)
+        self.carta7.setEnabled(False)
+        self.carta8.setEnabled(False)
+        self.carta9.setEnabled(False)
+        self.carta10.setEnabled(False)
+
+    def inicioJogo_UI(self):
+        _translate = QtCore.QCoreApplication.translate
+        self.iniciarJogo.hide()
+        self.mostrarCartas1()
+        self.mostrarCartasEscolhidas()
+        self.label_3.setText(_translate(self.label_3.text(), "Placar"))
+        self.ponto_Jogador1.setText(_translate(self.ponto_Jogador1.text(), "0"))
+        self.pontos_Jogador2.setText(_translate(self.pontos_Jogador2.text(), "0"))
 
 
 if __name__ == "__main__":
