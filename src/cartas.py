@@ -1,10 +1,36 @@
 import random
 
+class Cartas():
+
+    def __init__(self, elemento, level):
+        self.elemento = elemento
+        self.level = level
+
 class Baralho():
 
     def __init__(self):
-        self.baralho = [['Fogo', 1], ['Fogo', 2], ['Fogo', 3], ['Fogo', 4], ['Fogo', 5], ['Agua', 1], ['Agua', 2], ['Agua', 3],['Agua', 4],
-        ['Agua', 5],['Ar', 1],['Ar', 2],['Ar', 3],['Ar', 4],['Ar', 5],['Terra', 1],['Terra', 2],['Terra', 3],['Terra', 4],['Terra', 5]]
+        self.baralho = [
+            Cartas("Fogo",1),
+            Cartas("Fogo", 2),
+            Cartas("Fogo", 3),
+            Cartas("Fogo", 4),
+            Cartas("Fogo", 5),
+            Cartas("Agua", 1),
+            Cartas("Agua", 2),
+            Cartas("Agua", 3),
+            Cartas("Agua", 4),
+            Cartas("Agua", 5),
+            Cartas("Terra", 1),
+            Cartas("Terra", 2),
+            Cartas("Terra", 3),
+            Cartas("Terra", 4),
+            Cartas("Terra", 5),
+            Cartas("Ar", 1),
+            Cartas("Ar", 2),
+            Cartas("Ar", 3),
+            Cartas("Ar", 4),
+            Cartas("Ar", 5)
+        ]
 
     def embaralhar(self):
         count = 1;
@@ -14,8 +40,30 @@ class Baralho():
         while count != 11:
             while verificar:
                 try:
-                    numCarta = random.randint(0,19)
-                    teste = self.baralho[numCarta]
+                    numCarta = random.randint(0, 19)
+                    verificarCarta = self.baralho[numCarta]
+                    verificar = False
+                except:
+                    verificar = True
+
+            verificar = True
+            count = count + 1
+
+            cartasDoJogo.append(self.baralho[numCarta])
+            del(self.baralho[numCarta])
+
+        return cartasDoJogo
+
+    def embaralharSegundaMao(self, cartasJogadas):
+        count = 1;
+        verificar = True
+        cartasDoJogo = []
+
+        while count != 11:
+            while verificar:
+                try:
+                    numCarta = random.randint(0,9)
+                    verificarCarta = self.baralho[numCarta]
                     verificar = False
                 except:
                     verificar = True

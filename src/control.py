@@ -28,8 +28,9 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self.carta10.clicked.connect(lambda: self.definirJogada(10, self.carta10))
 
         self.estadoJogo = gamestate.GameState(True, 0)
-        self.Jogador1 = jogador.Jogador([], 1, 0)
-        self.Jogador2 = jogador.Jogador([], 0, 0)
+        self.Jogador1 = jogador.Jogador([], True)
+        self.Jogador2 = jogador.Jogador([], False)
+        self.cartasDoJogo = cartas.Baralho()
 
         self.iniciarJogo.clicked.connect(self.threadRun)
 
@@ -40,18 +41,18 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         t.start()
 
     def dividirCartas(self):
-        self.cartasDoJogo = cartas.Baralho().embaralhar()
+        self.cartasDoJogo = self.cartasDoJogo.embaralhar()
 
-        self.carta1.setText(self._translate("Vazio", self.cartasDoJogo[0][0]+', '+str(self.cartasDoJogo[0][1])))
-        self.carta2.setText(self._translate("Vazio", self.cartasDoJogo[1][0]+', '+str(self.cartasDoJogo[1][1])))
-        self.carta3.setText(self._translate("Vazio", self.cartasDoJogo[2][0]+', '+str(self.cartasDoJogo[2][1])))
-        self.carta4.setText(self._translate("Vazio", self.cartasDoJogo[3][0]+', '+str(self.cartasDoJogo[3][1])))
-        self.carta5.setText(self._translate("Vazio", self.cartasDoJogo[4][0]+', '+str(self.cartasDoJogo[4][1])))
-        self.carta6.setText(self._translate("Vazio", self.cartasDoJogo[5][0]+', '+str(self.cartasDoJogo[5][1])))
-        self.carta7.setText(self._translate("Vazio", self.cartasDoJogo[6][0]+', '+str(self.cartasDoJogo[6][1])))
-        self.carta8.setText(self._translate("Vazio", self.cartasDoJogo[7][0]+', '+str(self.cartasDoJogo[7][1])))
-        self.carta9.setText(self._translate("Vazio", self.cartasDoJogo[8][0]+', '+str(self.cartasDoJogo[8][1])))
-        self.carta10.setText(self._translate("Vazio", self.cartasDoJogo[9][0]+', '+str(self.cartasDoJogo[9][1])))
+        self.carta1.setText(self._translate("Vazio", self.cartasDoJogo[0].elemento+', '+str(self.cartasDoJogo[0].level)))
+        self.carta2.setText(self._translate("Vazio", self.cartasDoJogo[1].elemento+', '+str(self.cartasDoJogo[1].level)))
+        self.carta3.setText(self._translate("Vazio", self.cartasDoJogo[2].elemento+', '+str(self.cartasDoJogo[2].level)))
+        self.carta4.setText(self._translate("Vazio", self.cartasDoJogo[3].elemento+', '+str(self.cartasDoJogo[3].level)))
+        self.carta5.setText(self._translate("Vazio", self.cartasDoJogo[4].elemento+', '+str(self.cartasDoJogo[4].level)))
+        self.carta6.setText(self._translate("Vazio", self.cartasDoJogo[5].elemento+', '+str(self.cartasDoJogo[5].level)))
+        self.carta7.setText(self._translate("Vazio", self.cartasDoJogo[6].elemento+', '+str(self.cartasDoJogo[6].level)))
+        self.carta8.setText(self._translate("Vazio", self.cartasDoJogo[7].elemento+', '+str(self.cartasDoJogo[7].level)))
+        self.carta9.setText(self._translate("Vazio", self.cartasDoJogo[8].elemento+', '+str(self.cartasDoJogo[8].level)))
+        self.carta10.setText(self._translate("Vazio", self.cartasDoJogo[9].elemento+', '+str(self.cartasDoJogo[9].level)))
 
         i = 0
         while i < 5:
@@ -82,78 +83,59 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
             print(str(self.Jogador1.cartaDaVez))
             print(str(self.Jogador2.cartaDaVez))
 
-            self.label.setText(self._translate(self.label.text(), str(self.Jogador1.cartaDaVez).encode('utf-8')))
-            self.label_2.setText(self._translate(self.label_2.text(), str(self.Jogador2.cartaDaVez).encode('utf-8')))
+            self.label.setText(self._translate(self.label.text(), self.Jogador1.cartaDaVez.elemento+", "+str(self.Jogador1.cartaDaVez.level)))
+            self.label_2.setText(self._translate(self.label_2.text(), self.Jogador2.cartaDaVez.elemento+", "+str(self.Jogador2.cartaDaVez.level)))
 
         cartaRemover.setEnabled(False) #desabilitar botão que representa a carta das opções
 
     def verificarJogada(self):
-        pontuacaoAntiga1 = self.Jogador1.pontuacao
-        pontuacaoAntiga2 = self.Jogador2.pontuacao
 
+        #declarando elemento e level carta jogador 1
+        elementoCarta1 = self.Jogador1.cartaDaVez.elemento
+        levelCarta1 = self.Jogador1.cartaDaVez.level
 
-        elementoCarta1 = self.Jogador1.cartaDaVez[0]
-        print("elemento carta1: "+elementoCarta1)
-        levelCarta1 = self.Jogador1.cartaDaVez[1]
-        print("level carta1:"+str(levelCarta1))
+        #declarando elemento e level carta jogador 2
+        elementoCarta2 = self.Jogador2.cartaDaVez.elemento
+        levelCarta2 = self.Jogador2.cartaDaVez.level
 
-        elementoCarta2 = self.Jogador2.cartaDaVez[0]
-        print("elemento carta2: "+elementoCarta2)
+        #multiplicando carta jogador 1
+        if (elementoCarta2 == "Fogo" and elementoCarta1 == "Agua") or (elementoCarta2 == "Terra" and elementoCarta1 == "Ar") or (elementoCarta2 == "Ar" and elementoCarta1 == "Fogo") or (elementoCarta2 == "Agua" and elementoCarta1 == "Terra"):
+            levelCarta1 = levelCarta1 * 2
 
-        levelCarta2 = self.Jogador2.cartaDaVez[1]
-        print("level carta2:"+str(levelCarta2))
+        #multiplicação do LEVEL da carta do jogador 2
+        elif elementoCarta1 == "Terra" and elementoCarta2 == "Ar" or elementoCarta1 == "Agua" and elementoCarta2 == "Terra" or elementoCarta1 == "Ar" and elementoCarta2 == "Fogo" or elementoCarta1 == "Fogo" and elementoCarta2 == "Agua":
+            levelCarta2 = levelCarta2 * 2
 
-        #verificação de elemento
-        if elementoCarta1 == "Fogo" and elementoCarta2 == "Agua":
-            self.Jogador2.pontuacao = self.Jogador2.pontuacao + 1
+        #verificação de nível
+        if levelCarta1 > levelCarta2:
+            self.Jogador2.pontuacao = self.Jogador2.pontuacao - (levelCarta1-levelCarta2)
 
-        elif elementoCarta2 == "Fogo" and elementoCarta1 == "Agua":
-            self.Jogador1.pontuacao = self.Jogador1.pontuacao + 1
-
-        elif elementoCarta1 == "Terra" and elementoCarta2 == "Ar":
-            self.Jogador2.pontuacao = self.Jogador2.pontuacao + 1
-
-        elif elementoCarta2 == "Terra" and elementoCarta1 == "Ar":
-            self.Jogador1.pontuacao = self.Jogador1.pontuacao + 1
-
-        elif elementoCarta1 == "Ar" and elementoCarta2 == "Fogo":
-            self.Jogador2.pontuacao = self.Jogador2.pontuacao + 1
-
-        elif elementoCarta2 == "Ar" and elementoCarta1 == "Fogo":
-            self.Jogador1.pontuacao = self.Jogador1.pontuacao + 1
-
-        elif elementoCarta1 == "Agua" and elementoCarta2 == "Terra":
-            self.Jogador2.pontuacao = self.Jogador2.pontuacao + 1
-
-        elif elementoCarta2 == "Agua" and elementoCarta1 == "Terra":
-            self.Jogador1.pontuacao = self.Jogador1.pontuacao + 1
+        elif levelCarta2 > levelCarta1:
+            self.Jogador1.pontuacao = self.Jogador1.pontuacao - (levelCarta2-levelCarta1)
 
         else:
-            #verificação de nível
-            if levelCarta1 > levelCarta2:
-                self.Jogador1.pontuacao = self.Jogador1.pontuacao + 1
-
-            elif levelCarta2 > levelCarta1:
-                self.Jogador2.pontuacao = self.Jogador2.pontuacao + 1
-            else:
-                print("Empate")
+            print("Empate")
 
         #zerando a carta da vez pois finalizou a jogada
         self.Jogador1.cartaDaVez = 0
         self.Jogador2.cartaDaVez = 0
 
-        self.ponto_Jogador1.setText(self._translate(str(pontuacaoAntiga1), str(self.Jogador1.pontuacao)))
-        self.pontos_Jogador2.setText(self._translate(str(pontuacaoAntiga2), str(self.Jogador2.pontuacao)))
+        self.ponto_Jogador1.setText(self._translate(self.ponto_Jogador1.text(), str(self.Jogador1.pontuacao)))
+        self.pontos_Jogador2.setText(self._translate(self.pontos_Jogador2.text(), str(self.Jogador2.pontuacao)))
 
-        if self.Jogador1.pontuacao == 3:
-            self.estadoJogo.finalizarJogo()
-            return ("Jogador 1 ganhou")
+        #verificando se há pontuação 0
+        if self.Jogador1.pontuacao == 0 or self.Jogador2.pontuacao == 0:
+            self.estadoJogo.andamentoJogo = False
 
-        if self.Jogador2.pontuacao == 3:
-            self.estadoJogo.finalizarJogo()
-            return ("Jogador 2 ganhou")
+    def verificarVitoria(self):
+        if self.Jogador1.pontuacao == self.Jogador2.pontuacao:
+            return "Essa partida foi um empate."
 
-        return True
+        elif self.Jogador1.pontuacao > self.Jogador2.pontuacao:
+            return "Vitória Jogador 1"
+
+        else:
+            return "Vitória Jogador 2"
 
     def reinicioJogo(self):
         self.estadoJogo = gamestate.GameState(True, 0)
@@ -170,31 +152,34 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         vencedor = ""
 
         while self.estadoJogo.andamentoJogo == True and self.estadoJogo.contadorTurno < 5:
+
+            '''
+            #não foi definido o vencedor, necessário reembaralhar
+            if self.estadoJogo.contadorTurno >= 5:
+                self.cartasDoJogo.embaralharSegundaMao(self.cartasDoJogo)
+            '''
+
             #vez do jogador 1
             self.esconderCartas2()
-            while self.Jogador1.turno == 1:
+            while self.Jogador1.turno == True:
                 continue
 
             #vez do jogador 2
             self.esconderCartas1()
-            while self.Jogador2.turno == 1:
+            while self.Jogador2.turno == True:
                 continue
 
             #verificação das jogadas
-            vencedor = self.verificarJogada()
+            self.verificarJogada()
 
             #aumenta o turno para finalizar o jogo
             self.estadoJogo.aumentarTurno()
-
-        #verificaçãoEmpate
-        if self.Jogador1.pontuacao == self.Jogador2.pontuacao:
-            vencedor = "Essa partida foi um empate."
 
         #remover cartas do jogo
         self.desabilitarBotoes()
 
         #Escrevendo vencedor
-        self.label_3.setText(self._translate(self.label_3.text(), vencedor))
+        self.label_3.setText(self._translate(self.label_3.text(), self.verificarVitoria()))
 
         #Reiniciando interface para nova partida
         self.UI_inicial()

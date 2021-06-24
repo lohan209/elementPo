@@ -56,7 +56,7 @@ class Ui_ElementPo(object):
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.ponto_Jogador1 = QtWidgets.QLabel(ElementPo)
-        self.ponto_Jogador1.setGeometry(QtCore.QRect(65, 360, 45, 45))
+        self.ponto_Jogador1.setGeometry(QtCore.QRect(65, 360, 55, 55))
         font = QtGui.QFont()
         font.setPointSize(45)
         self.ponto_Jogador1.setFont(font)
@@ -64,7 +64,7 @@ class Ui_ElementPo(object):
         self.ponto_Jogador1.setAlignment(QtCore.Qt.AlignCenter)
         self.ponto_Jogador1.setObjectName("ponto_Jogador1")
         self.pontos_Jogador2 = QtWidgets.QLabel(ElementPo)
-        self.pontos_Jogador2.setGeometry(QtCore.QRect(545, 360, 45, 45))
+        self.pontos_Jogador2.setGeometry(QtCore.QRect(545, 360, 55, 55))
         font = QtGui.QFont()
         font.setPointSize(45)
         self.pontos_Jogador2.setFont(font)
@@ -136,8 +136,8 @@ class Ui_ElementPo(object):
         self.carta10.setText(_translate("ElementPo", "PushButton"))
         self.label.setText(_translate("ElementPo", "Carta 1"))
         self.label_2.setText(_translate("ElementPo", "Carta 2"))
-        self.ponto_Jogador1.setText(_translate("ElementPo", "0"))
-        self.pontos_Jogador2.setText(_translate("ElementPo", "0"))
+        self.ponto_Jogador1.setText(_translate("ElementPo", "20"))
+        self.pontos_Jogador2.setText(_translate("ElementPo", "20"))
         self.label_3.setText(_translate("ElementPo", "Placar"))
         self.iniciarJogo.setText(_translate("ElementPo", "Iniciar jogo"))
 
@@ -195,8 +195,8 @@ class Ui_ElementPo(object):
         self.mostrarCartas1()
         self.mostrarCartasEscolhidas()
         self.label_3.setText(_translate(self.label_3.text(), "Placar"))
-        self.ponto_Jogador1.setText(_translate(self.ponto_Jogador1.text(), "0"))
-        self.pontos_Jogador2.setText(_translate(self.pontos_Jogador2.text(), "0"))
+        self.ponto_Jogador1.setText(_translate(self.ponto_Jogador1.text(), "20"))
+        self.pontos_Jogador2.setText(_translate(self.pontos_Jogador2.text(), "20"))
 
 
 if __name__ == "__main__":
