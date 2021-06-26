@@ -189,6 +189,18 @@ class Ui_ElementPo(object):
         self.carta9.setEnabled(False)
         self.carta10.setEnabled(False)
 
+    def habilitarBotoes(self):
+        self.carta1.setEnabled(True)
+        self.carta2.setEnabled(True)
+        self.carta3.setEnabled(True)
+        self.carta4.setEnabled(True)
+        self.carta5.setEnabled(True)
+        self.carta6.setEnabled(True)
+        self.carta7.setEnabled(True)
+        self.carta8.setEnabled(True)
+        self.carta9.setEnabled(True)
+        self.carta10.setEnabled(True)
+
     def inicioJogo_UI(self):
         _translate = QtCore.QCoreApplication.translate
         self.iniciarJogo.hide()

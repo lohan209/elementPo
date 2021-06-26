@@ -53,25 +53,3 @@ class Baralho():
             del(self.baralho[numCarta])
 
         return cartasDoJogo
-
-    def embaralharSegundaMao(self, cartasJogadas):
-        count = 1;
-        verificar = True
-        cartasDoJogo = []
-
-        while count != 11:
-            while verificar:
-                try:
-                    numCarta = random.randint(0,9)
-                    verificarCarta = self.baralho[numCarta]
-                    verificar = False
-                except:
-                    verificar = True
-
-            verificar = True
-            count = count + 1
-
-            cartasDoJogo.append(self.baralho[numCarta])
-            del(self.baralho[numCarta])
-
-        return cartasDoJogo

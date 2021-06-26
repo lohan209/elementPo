@@ -41,26 +41,26 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         t.start()
 
     def dividirCartas(self):
-        self.cartasDoJogo = self.cartasDoJogo.embaralhar()
+        divisaoCartas = self.cartasDoJogo.embaralhar()
 
-        self.carta1.setText(self._translate("Vazio", self.cartasDoJogo[0].elemento+', '+str(self.cartasDoJogo[0].level)))
-        self.carta2.setText(self._translate("Vazio", self.cartasDoJogo[1].elemento+', '+str(self.cartasDoJogo[1].level)))
-        self.carta3.setText(self._translate("Vazio", self.cartasDoJogo[2].elemento+', '+str(self.cartasDoJogo[2].level)))
-        self.carta4.setText(self._translate("Vazio", self.cartasDoJogo[3].elemento+', '+str(self.cartasDoJogo[3].level)))
-        self.carta5.setText(self._translate("Vazio", self.cartasDoJogo[4].elemento+', '+str(self.cartasDoJogo[4].level)))
-        self.carta6.setText(self._translate("Vazio", self.cartasDoJogo[5].elemento+', '+str(self.cartasDoJogo[5].level)))
-        self.carta7.setText(self._translate("Vazio", self.cartasDoJogo[6].elemento+', '+str(self.cartasDoJogo[6].level)))
-        self.carta8.setText(self._translate("Vazio", self.cartasDoJogo[7].elemento+', '+str(self.cartasDoJogo[7].level)))
-        self.carta9.setText(self._translate("Vazio", self.cartasDoJogo[8].elemento+', '+str(self.cartasDoJogo[8].level)))
-        self.carta10.setText(self._translate("Vazio", self.cartasDoJogo[9].elemento+', '+str(self.cartasDoJogo[9].level)))
+        self.carta1.setText(self._translate("Vazio", divisaoCartas[0].elemento+', '+str(divisaoCartas[0].level)))
+        self.carta2.setText(self._translate("Vazio", divisaoCartas[1].elemento+', '+str(divisaoCartas[1].level)))
+        self.carta3.setText(self._translate("Vazio", divisaoCartas[2].elemento+', '+str(divisaoCartas[2].level)))
+        self.carta4.setText(self._translate("Vazio", divisaoCartas[3].elemento+', '+str(divisaoCartas[3].level)))
+        self.carta5.setText(self._translate("Vazio", divisaoCartas[4].elemento+', '+str(divisaoCartas[4].level)))
+        self.carta6.setText(self._translate("Vazio", divisaoCartas[5].elemento+', '+str(divisaoCartas[5].level)))
+        self.carta7.setText(self._translate("Vazio", divisaoCartas[6].elemento+', '+str(divisaoCartas[6].level)))
+        self.carta8.setText(self._translate("Vazio", divisaoCartas[7].elemento+', '+str(divisaoCartas[7].level)))
+        self.carta9.setText(self._translate("Vazio", divisaoCartas[8].elemento+', '+str(divisaoCartas[8].level)))
+        self.carta10.setText(self._translate("Vazio", divisaoCartas[9].elemento+', '+str(divisaoCartas[9].level)))
 
         i = 0
         while i < 5:
-            self.Jogador1.cartas.append(self.cartasDoJogo[i])
+            self.Jogador1.cartas.append(divisaoCartas[i])
             i = i +1;
 
         while i < 10:
-            self.Jogador2.cartas.append(self.cartasDoJogo[i])
+            self.Jogador2.cartas.append(divisaoCartas[i])
             i = i + 1;
 
     def definirJogada(self, cartaEscolhida, cartaRemover):
@@ -71,7 +71,6 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
 
             self.mostrarCartas2()
             self.Jogador1.cartaDaVez = self.Jogador1.cartas[cartaEscolhida-1]
-
         else:
             self.Jogador2.mudançaTurno()
             self.Jogador1.mudançaTurno()
@@ -80,8 +79,8 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
             self.Jogador2.cartaDaVez = self.Jogador2.cartas[cartaEscolhida-6]
 
 
-            print(str(self.Jogador1.cartaDaVez))
-            print(str(self.Jogador2.cartaDaVez))
+            print(self.Jogador1.cartaDaVez.elemento)
+            print(self.Jogador2.cartaDaVez.elemento)
 
             self.label.setText(self._translate(self.label.text(), self.Jogador1.cartaDaVez.elemento+", "+str(self.Jogador1.cartaDaVez.level)))
             self.label_2.setText(self._translate(self.label_2.text(), self.Jogador2.cartaDaVez.elemento+", "+str(self.Jogador2.cartaDaVez.level)))
@@ -117,8 +116,8 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
             print("Empate")
 
         #zerando a carta da vez pois finalizou a jogada
-        self.Jogador1.cartaDaVez = 0
-        self.Jogador2.cartaDaVez = 0
+        self.Jogador1.cartaDaVez = cartas.Cartas("", 0)
+        self.Jogador2.cartaDaVez = cartas.Cartas("", 0)
 
         self.ponto_Jogador1.setText(self._translate(self.ponto_Jogador1.text(), str(self.Jogador1.pontuacao)))
         self.pontos_Jogador2.setText(self._translate(self.pontos_Jogador2.text(), str(self.Jogador2.pontuacao)))
@@ -139,8 +138,8 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
 
     def reinicioJogo(self):
         self.estadoJogo = gamestate.GameState(True, 0)
-        self.Jogador1 = jogador.Jogador([], 1, 0)
-        self.Jogador2 = jogador.Jogador([], 0, 0)
+        self.Jogador1 = jogador.Jogador([], 1)
+        self.Jogador2 = jogador.Jogador([], 0)
 
     def jogo(self):
         #Dividir as cartas por jogadores
@@ -149,15 +148,17 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         #Alterar VIEW para ficar com UI do início do jogo
         self.inicioJogo_UI()
 
-        vencedor = ""
+        self.estadoJogo.contadorTurno = 5
 
-        while self.estadoJogo.andamentoJogo == True and self.estadoJogo.contadorTurno < 5:
+        while self.estadoJogo.andamentoJogo == True and self.estadoJogo.contadorTurno < 10:
 
-            '''
             #não foi definido o vencedor, necessário reembaralhar
-            if self.estadoJogo.contadorTurno >= 5:
-                self.cartasDoJogo.embaralharSegundaMao(self.cartasDoJogo)
-            '''
+            if self.estadoJogo.contadorTurno == 5:
+                self.Jogador1.cartas = []
+                self.Jogador2.cartas = []
+                self.dividirCartas()
+                self.habilitarBotoes()
+
 
             #vez do jogador 1
             self.esconderCartas2()
