@@ -66,29 +66,25 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
     def definirJogada(self, cartaEscolhida, cartaRemover):
         #verificar se a carta escolhida é o jogador 1 ou 2, para definir qual será o próximo turno
         if cartaEscolhida <= 5:
+            self.Jogador1.cartaDaVez = self.Jogador1.cartas[cartaEscolhida - 1]
             self.Jogador2.mudançaTurno()
             self.Jogador1.mudançaTurno()
 
+            self.esconderCartas1()
             self.mostrarCartas2()
-            self.Jogador1.cartaDaVez = self.Jogador1.cartas[cartaEscolhida-1]
+
         else:
-            self.Jogador2.mudançaTurno()
-            self.Jogador1.mudançaTurno()
-
-            self.mostrarCartas1()
-            self.Jogador2.cartaDaVez = self.Jogador2.cartas[cartaEscolhida-6]
-
-
-            print(self.Jogador1.cartaDaVez.elemento)
-            print(self.Jogador2.cartaDaVez.elemento)
+            self.Jogador2.cartaDaVez = self.Jogador2.cartas[cartaEscolhida - 6]
 
             self.label.setText(self._translate(self.label.text(), self.Jogador1.cartaDaVez.elemento+", "+str(self.Jogador1.cartaDaVez.level)))
             self.label_2.setText(self._translate(self.label_2.text(), self.Jogador2.cartaDaVez.elemento+", "+str(self.Jogador2.cartaDaVez.level)))
 
+            self.Jogador2.mudançaTurno()
+            self.Jogador1.mudançaTurno()
+
         cartaRemover.setEnabled(False) #desabilitar botão que representa a carta das opções
 
     def verificarJogada(self):
-
         #declarando elemento e level carta jogador 1
         elementoCarta1 = self.Jogador1.cartaDaVez.elemento
         levelCarta1 = self.Jogador1.cartaDaVez.level
@@ -123,10 +119,12 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self.pontos_Jogador2.setText(self._translate(self.pontos_Jogador2.text(), str(self.Jogador2.pontuacao)))
 
         #verificando se há pontuação 0
-        if self.Jogador1.pontuacao == 0 or self.Jogador2.pontuacao == 0:
+        if self.Jogador1.pontuacao <= 0 or self.Jogador2.pontuacao <= 0:
             self.estadoJogo.andamentoJogo = False
 
-    def verificarVitoria(self):
+    def verificarVencedor(self):
+        # aumenta o turno para finalizar o jogo
+
         if self.Jogador1.pontuacao == self.Jogador2.pontuacao:
             return "Essa partida foi um empate."
 
@@ -148,8 +146,6 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         #Alterar VIEW para ficar com UI do início do jogo
         self.inicioJogo_UI()
 
-        self.estadoJogo.contadorTurno = 5
-
         while self.estadoJogo.andamentoJogo == True and self.estadoJogo.contadorTurno < 10:
 
             #não foi definido o vencedor, necessário reembaralhar
@@ -159,28 +155,28 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
                 self.dividirCartas()
                 self.habilitarBotoes()
 
+            self.esconderCartas2()
+            self.mostrarCartas1()
 
             #vez do jogador 1
-            self.esconderCartas2()
             while self.Jogador1.turno == True:
                 continue
 
             #vez do jogador 2
-            self.esconderCartas1()
             while self.Jogador2.turno == True:
                 continue
 
+            #aumentar um turno
+            self.estadoJogo.aumentarTurno()
+
             #verificação das jogadas
             self.verificarJogada()
-
-            #aumenta o turno para finalizar o jogo
-            self.estadoJogo.aumentarTurno()
 
         #remover cartas do jogo
         self.desabilitarBotoes()
 
         #Escrevendo vencedor
-        self.label_3.setText(self._translate(self.label_3.text(), self.verificarVitoria()))
+        self.label_3.setText(self._translate(self.label_3.text(), self.verificarVencedor()))
 
         #Reiniciando interface para nova partida
         self.UI_inicial()
