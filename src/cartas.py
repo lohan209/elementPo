@@ -33,11 +33,11 @@ class Baralho():
         ]
 
     def embaralhar(self):
-        count = 1;
+        count = 0;
         verificar = True
         cartasDoJogo = []
 
-        while count != 11:
+        while count != 10:
             while verificar:
                 try:
                     numCarta = random.randint(0, 19)

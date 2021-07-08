@@ -27,10 +27,10 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self.carta9.clicked.connect(lambda: self.definirJogada(9, self.carta9))
         self.carta10.clicked.connect(lambda: self.definirJogada(10, self.carta10))
 
-        self.estadoJogo = gamestate.GameState(True, 0)
-        self.Jogador1 = jogador.Jogador([], True)
-        self.Jogador2 = jogador.Jogador([], False)
-        self.cartasDoJogo = cartas.Baralho()
+        self.estadoJogo = None;
+        self.Jogador1 = None;
+        self.Jogador2 = None;
+        self.cartasDoJogo = None;
 
         self.iniciarJogo.clicked.connect(self.threadRun)
 
@@ -98,7 +98,7 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
             levelCarta1 = levelCarta1 * 2
 
         #multiplicação do LEVEL da carta do jogador 2
-        elif elementoCarta1 == "Terra" and elementoCarta2 == "Ar" or elementoCarta1 == "Agua" and elementoCarta2 == "Terra" or elementoCarta1 == "Ar" and elementoCarta2 == "Fogo" or elementoCarta1 == "Fogo" and elementoCarta2 == "Agua":
+        elif (elementoCarta1 == "Terra" and elementoCarta2 == "Ar") or (elementoCarta1 == "Agua" and elementoCarta2 == "Terra") or (elementoCarta1 == "Ar" and elementoCarta2 == "Fogo") or (elementoCarta1 == "Fogo" and elementoCarta2 == "Agua"):
             levelCarta2 = levelCarta2 * 2
 
         #verificação de nível
@@ -134,12 +134,15 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         else:
             return "Vitória Jogador 2"
 
-    def reinicioJogo(self):
+    def estadoInicial(self):
         self.estadoJogo = gamestate.GameState(True, 0)
-        self.Jogador1 = jogador.Jogador([], 1)
-        self.Jogador2 = jogador.Jogador([], 0)
+        self.Jogador1 = jogador.Jogador([], True)
+        self.Jogador2 = jogador.Jogador([], False)
+        self.cartasDoJogo = cartas.Baralho()
 
     def jogo(self):
+        self.estadoInicial()
+
         #Dividir as cartas por jogadores
         self.dividirCartas()
 
@@ -180,4 +183,3 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
 
         #Reiniciando interface para nova partida
         self.UI_inicial()
-        self.reinicioJogo()
