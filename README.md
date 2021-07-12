@@ -9,8 +9,9 @@
 
 Para conseguir rodar o jogo, são necessário as seguintes configurações:
 
-1. Instalar a biblioteca PyQT5. Para isso, executar o comando *pip install PyQt5*.
-2. Entrar na pasta do jogo onde contém o arquivo main.py - *elementoPo/src/*.
-3. Executar o comando *python main.py*. 
+1. Ter instalado em seu computador o *Python 3.9.6*.
+2. Instalar a biblioteca PyQT5. Para isso, executar o comando *pip install PyQt5*.
+3. Entrar na pasta do jogo onde contém o arquivo main.py - *elementoPo/src/*.
+4. Executar o comando *python main.py*. 
 
 Divirtam-se!
