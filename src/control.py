@@ -6,6 +6,7 @@ from PyQt5 import QtWidgets, QtCore
 import cartas
 import threading
 import jogador
+import campovelha
 
 class Control(QtWidgets.QWidget, view.Ui_ElementPo):
 
@@ -16,28 +17,41 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self._translate = QtCore.QCoreApplication.translate
 
         #Botões de ação das cartas
-        self.carta1.clicked.connect(lambda: self.definirJogada(1, self.carta1))
-        self.carta2.clicked.connect(lambda: self.definirJogada(2, self.carta2))
-        self.carta3.clicked.connect(lambda: self.definirJogada(3, self.carta3))
-        self.carta4.clicked.connect(lambda: self.definirJogada(4, self.carta4))
-        self.carta5.clicked.connect(lambda: self.definirJogada(5, self.carta5))
-        self.carta6.clicked.connect(lambda: self.definirJogada(6, self.carta6))
-        self.carta7.clicked.connect(lambda: self.definirJogada(7, self.carta7))
-        self.carta8.clicked.connect(lambda: self.definirJogada(8, self.carta8))
-        self.carta9.clicked.connect(lambda: self.definirJogada(9, self.carta9))
-        self.carta10.clicked.connect(lambda: self.definirJogada(10, self.carta10))
+        self.carta1.clicked.connect(lambda: self.definirCarta(1, self.carta1))
+        self.carta2.clicked.connect(lambda: self.definirCarta(2, self.carta2))
+        self.carta3.clicked.connect(lambda: self.definirCarta(3, self.carta3))
+        self.carta4.clicked.connect(lambda: self.definirCarta(4, self.carta4))
+        self.carta5.clicked.connect(lambda: self.definirCarta(5, self.carta5))
+        self.carta6.clicked.connect(lambda: self.definirCarta(6, self.carta6))
+        self.carta7.clicked.connect(lambda: self.definirCarta(7, self.carta7))
+        self.carta8.clicked.connect(lambda: self.definirCarta(8, self.carta8))
+        self.carta9.clicked.connect(lambda: self.definirCarta(9, self.carta9))
+        self.carta10.clicked.connect(lambda: self.definirCarta(10, self.carta10))
+
+        #Botões de ação das cartas
+        self.pos_1.clicked.connect(lambda: self.definirCampo(1))
+        self.pos_2.clicked.connect(lambda: self.definirCampo(2))
+        self.pos_3.clicked.connect(lambda: self.definirCampo(3))
+        self.pos_4.clicked.connect(lambda: self.definirCampo(4))
+        self.pos_5.clicked.connect(lambda: self.definirCampo(5))
+        self.pos_6.clicked.connect(lambda: self.definirCampo(6))
+        self.pos_7.clicked.connect(lambda: self.definirCampo(7))
+        self.pos_8.clicked.connect(lambda: self.definirCampo(8))
+        self.pos_9.clicked.connect(lambda: self.definirCampo(9))
 
         self.estadoJogo = None;
         self.Jogador1 = None;
         self.Jogador2 = None;
         self.cartasDoJogo = None;
 
-        self.iniciarJogo.clicked.connect(self.threadRun)
+        self.campoDeJogo = campovelha.Campo()
+
+        self.acaoBtn.clicked.connect(self.threadRun)
 
     #CONTROLE DAS REGRAS DO JOGO
     def threadRun(self): #running threads
         self.is_running = True
-        t = threading.Thread(target=self.jogo, name="start")
+        t = threading.Thread(target=self.mudancaEstado, name="start")
         t.start()
 
     def dividirCartas(self):
@@ -63,27 +77,44 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
             self.Jogador2.cartas.append(divisaoCartas[i])
             i = i + 1;
 
-    def definirJogada(self, cartaEscolhida, cartaRemover):
+    def definirCarta(self, cartaEscolhida, cartaRemover):
         #verificar se a carta escolhida é o jogador 1 ou 2, para definir qual será o próximo turno
         if cartaEscolhida <= 5:
             self.Jogador1.cartaDaVez = self.Jogador1.cartas[cartaEscolhida - 1]
-            self.Jogador2.mudançaTurno()
-            self.Jogador1.mudançaTurno()
-
-            self.esconderCartas1()
-            self.mostrarCartas2()
+            self.habilitarCampo()
 
         else:
             self.Jogador2.cartaDaVez = self.Jogador2.cartas[cartaEscolhida - 6]
-
-            self.label.setText(self._translate(self.label.text(), self.Jogador1.cartaDaVez.elemento+", "+str(self.Jogador1.cartaDaVez.level)))
-            self.label_2.setText(self._translate(self.label_2.text(), self.Jogador2.cartaDaVez.elemento+", "+str(self.Jogador2.cartaDaVez.level)))
-
-            self.Jogador2.mudançaTurno()
-            self.Jogador1.mudançaTurno()
+            self.habilitarCampo()
 
         cartaRemover.setEnabled(False) #desabilitar botão que representa a carta das opções
 
+    def definirCampo(self, posicao):
+        if self.Jogador1.turno == True:
+            self.campoDeJogo.posicoesJ1[posicao].elemento = self.Jogador1.cartaDaVez.elemento
+            self.campoDeJogo.posicoesJ1[posicao].level = self.Jogador1.cartaDaVez.level
+
+            self.Jogador2.mudançaTurno()
+            self.Jogador1.mudançaTurno()
+            self.alterarBtnAcao(1)
+            self.esconderCartas1()
+            self.esconderCampo() #esconder campo selecionável
+
+        else:
+            self.campoDeJogo.posicoesJ2[posicao].elemento = self.Jogador2.cartaDaVez.elemento
+            self.campoDeJogo.posicoesJ2[posicao].level = self.Jogador2.cartaDaVez.level
+            print(self.campoDeJogo.posicoesJ2[posicao].elemento)
+
+            self.Jogador2.mudançaTurno()
+            self.Jogador1.mudançaTurno()
+            self.esconderCartas2()
+            self.alterarBtnAcao(0)
+            self.esconderCampo() #esconder campo selecionável
+
+
+        #self.verificarJogada()
+
+    #FALTA FAZER LÓGICA DE JOGADA E VITÓRIA
     def verificarJogada(self):
         #declarando elemento e level carta jogador 1
         elementoCarta1 = self.Jogador1.cartaDaVez.elemento
@@ -139,16 +170,45 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self.Jogador1 = jogador.Jogador([], True)
         self.Jogador2 = jogador.Jogador([], False)
         self.cartasDoJogo = cartas.Baralho()
-
-    def jogo(self):
-        self.estadoInicial()
-
-        #Dividir as cartas por jogadores
+        self.alterarBtnAcao(0)
         self.dividirCartas()
 
-        #Alterar VIEW para ficar com UI do início do jogo
-        self.inicioJogo_UI()
+    def mudancaEstado(self):
+        if self.acaoBtn.text() == "Iniciar jogo":
+            self.estadoInicial()
 
+        else:
+            if self.estadoJogo.contadorTurno == 5:
+                self.Jogador1.cartas = []
+                self.Jogador2.cartas = []
+                self.dividirCartas()
+                self.habilitarBotoes()
+
+            #verificar de quem é a ver
+            if self.Jogador1.turno == True:
+                self.statusBtnAcao(False)
+                self.esconderCartas2()
+                self.mostrarCartas1()
+
+                # Aguardando o usuário 1 escolher carta, campo e passar o turno
+                while self.Jogador1.turno == True:
+                    continue
+
+            else:
+                self.mostrarCartas2()
+                self.statusBtnAcao(False)
+
+                #Aguardando o usuário 2 escolher carta, campo e passar o turno
+                while self.Jogador2.turno == True:
+                    continue
+
+                #realizar o aumento de turno após jogada do jogador 2
+                self.estadoJogo.aumentarTurno()
+
+                #Verificar se houve algum vencedor na rodada
+                #self.verificarVencedor()
+
+        '''
         while self.estadoJogo.andamentoJogo == True and self.estadoJogo.contadorTurno < 10:
 
             #não foi definido o vencedor, necessário reembaralhar
@@ -183,3 +243,4 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
 
         #Reiniciando interface para nova partida
         self.UI_inicial()
+        '''
