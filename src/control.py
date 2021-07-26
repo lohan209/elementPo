@@ -68,15 +68,25 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         divisaoCartas = self.cartasDoJogo.embaralhar()
 
         self.carta1.setText(self._translate("Vazio", divisaoCartas[0].elemento+', '+str(divisaoCartas[0].level)))
+        self.colocarBgImage(self.carta1, divisaoCartas[0].elemento)
         self.carta2.setText(self._translate("Vazio", divisaoCartas[1].elemento+', '+str(divisaoCartas[1].level)))
+        self.colocarBgImage(self.carta2, divisaoCartas[1].elemento)
         self.carta3.setText(self._translate("Vazio", divisaoCartas[2].elemento+', '+str(divisaoCartas[2].level)))
+        self.colocarBgImage(self.carta3, divisaoCartas[2].elemento)
         self.carta4.setText(self._translate("Vazio", divisaoCartas[3].elemento+', '+str(divisaoCartas[3].level)))
+        self.colocarBgImage(self.carta4, divisaoCartas[3].elemento)
         self.carta5.setText(self._translate("Vazio", divisaoCartas[4].elemento+', '+str(divisaoCartas[4].level)))
+        self.colocarBgImage(self.carta5, divisaoCartas[4].elemento)
         self.carta6.setText(self._translate("Vazio", divisaoCartas[5].elemento+', '+str(divisaoCartas[5].level)))
+        self.colocarBgImage(self.carta6, divisaoCartas[5].elemento)
         self.carta7.setText(self._translate("Vazio", divisaoCartas[6].elemento+', '+str(divisaoCartas[6].level)))
+        self.colocarBgImage(self.carta7, divisaoCartas[6].elemento)
         self.carta8.setText(self._translate("Vazio", divisaoCartas[7].elemento+', '+str(divisaoCartas[7].level)))
+        self.colocarBgImage(self.carta8, divisaoCartas[7].elemento)
         self.carta9.setText(self._translate("Vazio", divisaoCartas[8].elemento+', '+str(divisaoCartas[8].level)))
+        self.colocarBgImage(self.carta9, divisaoCartas[8].elemento)
         self.carta10.setText(self._translate("Vazio", divisaoCartas[9].elemento+', '+str(divisaoCartas[9].level)))
+        self.colocarBgImage(self.carta10, divisaoCartas[9].elemento)
 
         i = 0
         while i < 5:
@@ -193,6 +203,7 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self.cartasDoJogo = cartas.Baralho()
         self.alterarBtnAcao(0)
         self.dividirCartas()
+        # self.colocarBgImage(self.cartasDoJogo)
         self.campoDeJogo = campovelha.Campo()
 
     def mudancaEstado(self):
