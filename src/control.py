@@ -29,17 +29,27 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self.carta10.clicked.connect(lambda: self.definirCarta(10, self.carta10))
 
         #Botões de ação das cartas
-        self.pos_1.clicked.connect(lambda: self.definirCampo(1))
-        self.pos_2.clicked.connect(lambda: self.definirCampo(2))
-        self.pos_3.clicked.connect(lambda: self.definirCampo(3))
-        self.pos_4.clicked.connect(lambda: self.definirCampo(4))
-        self.pos_5.clicked.connect(lambda: self.definirCampo(5))
-        self.pos_6.clicked.connect(lambda: self.definirCampo(6))
-        self.pos_7.clicked.connect(lambda: self.definirCampo(7))
-        self.pos_8.clicked.connect(lambda: self.definirCampo(8))
-        self.pos_9.clicked.connect(lambda: self.definirCampo(9))
+        self.pos_1.clicked.connect(lambda: self.definirCampo(0))
+        self.pos_2.clicked.connect(lambda: self.definirCampo(1))
+        self.pos_3.clicked.connect(lambda: self.definirCampo(2))
+        self.pos_4.clicked.connect(lambda: self.definirCampo(3))
+        self.pos_5.clicked.connect(lambda: self.definirCampo(4))
+        self.pos_6.clicked.connect(lambda: self.definirCampo(5))
+        self.pos_7.clicked.connect(lambda: self.definirCampo(6))
+        self.pos_8.clicked.connect(lambda: self.definirCampo(7))
+        self.pos_9.clicked.connect(lambda: self.definirCampo(8))
 
-        self.estadoJogo = None;
+        self.pos_1_J2.clicked.connect(lambda: self.definirCampo(0))
+        self.pos_2_J2.clicked.connect(lambda: self.definirCampo(1))
+        self.pos_3_J2.clicked.connect(lambda: self.definirCampo(2))
+        self.pos_4_J2.clicked.connect(lambda: self.definirCampo(3))
+        self.pos_5_J2.clicked.connect(lambda: self.definirCampo(4))
+        self.pos_6_J2.clicked.connect(lambda: self.definirCampo(5))
+        self.pos_7_J2.clicked.connect(lambda: self.definirCampo(6))
+        self.pos_8_J2.clicked.connect(lambda: self.definirCampo(7))
+        self.pos_9_J2.clicked.connect(lambda: self.definirCampo(8))
+
+        self.estadoJogo = gamestate.GameState(False, 0)
         self.Jogador1 = None;
         self.Jogador2 = None;
         self.cartasDoJogo = None;
@@ -81,48 +91,49 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         #verificar se a carta escolhida é o jogador 1 ou 2, para definir qual será o próximo turno
         if cartaEscolhida <= 5:
             self.Jogador1.cartaDaVez = self.Jogador1.cartas[cartaEscolhida - 1]
-            self.habilitarCampo()
+            self.esconderCartas1()
+            self.mostrarCampo(1, self.campoDeJogo)
 
         else:
             self.Jogador2.cartaDaVez = self.Jogador2.cartas[cartaEscolhida - 6]
-            self.habilitarCampo()
+            self.esconderCartas2()
+            self.mostrarCampo(2, self.campoDeJogo)
 
         cartaRemover.setEnabled(False) #desabilitar botão que representa a carta das opções
 
-    def definirCampo(self, posicao):
+    def definirCampo(self, pos):
         if self.Jogador1.turno == True:
-            self.campoDeJogo.posicoesJ1[posicao].elemento = self.Jogador1.cartaDaVez.elemento
-            self.campoDeJogo.posicoesJ1[posicao].level = self.Jogador1.cartaDaVez.level
+            self.campoDeJogo.posicoesJ1[pos].elemento = self.Jogador1.cartaDaVez.elemento
+            self.campoDeJogo.posicoesJ1[pos].level = self.Jogador1.cartaDaVez.level
 
-            self.Jogador2.mudançaTurno()
-            self.Jogador1.mudançaTurno()
-            self.alterarBtnAcao(1)
-            self.esconderCartas1()
-            self.esconderCampo() #esconder campo selecionável
+            self.preencherCampo(1, pos)
+
+            self.estadoJogo.mudancaTurno(self.Jogador1, self.Jogador2)
+            self.jogada_J1()
 
         else:
-            self.campoDeJogo.posicoesJ2[posicao].elemento = self.Jogador2.cartaDaVez.elemento
-            self.campoDeJogo.posicoesJ2[posicao].level = self.Jogador2.cartaDaVez.level
-            print(self.campoDeJogo.posicoesJ2[posicao].elemento)
+            self.campoDeJogo.posicoesJ2[pos].elemento = self.Jogador2.cartaDaVez.elemento
+            self.campoDeJogo.posicoesJ2[pos].level = self.Jogador2.cartaDaVez.level
 
-            self.Jogador2.mudançaTurno()
-            self.Jogador1.mudançaTurno()
-            self.esconderCartas2()
-            self.alterarBtnAcao(0)
-            self.esconderCampo() #esconder campo selecionável
+            self.preencherCampo(2, pos)
 
+            self.estadoJogo.mudancaTurno(self.Jogador2, self.Jogador1)
+            self.jogada_J2()
 
-        #self.verificarJogada()
+        self.verificarBatalhaCampo(pos)
 
-    #FALTA FAZER LÓGICA DE JOGADA E VITÓRIA
-    def verificarJogada(self):
+    def verificarBatalhaCampo(self, pos):
+        if self.campoDeJogo.posicoesJ1[pos].elemento != "" and self.campoDeJogo.posicoesJ2[pos].elemento != "":
+            self.verificarJogada(pos)
+
+    def verificarJogada(self, pos):
         #declarando elemento e level carta jogador 1
-        elementoCarta1 = self.Jogador1.cartaDaVez.elemento
-        levelCarta1 = self.Jogador1.cartaDaVez.level
+        elementoCarta1 = self.campoDeJogo.posicoesJ1[pos].elemento
+        levelCarta1 = self.campoDeJogo.posicoesJ1[pos].level
 
         #declarando elemento e level carta jogador 2
-        elementoCarta2 = self.Jogador2.cartaDaVez.elemento
-        levelCarta2 = self.Jogador2.cartaDaVez.level
+        elementoCarta2 = self.campoDeJogo.posicoesJ2[pos].elemento
+        levelCarta2 = self.campoDeJogo.posicoesJ2[pos].level
 
         #multiplicando carta jogador 1
         if (elementoCarta2 == "Fogo" and elementoCarta1 == "Agua") or (elementoCarta2 == "Terra" and elementoCarta1 == "Ar") or (elementoCarta2 == "Ar" and elementoCarta1 == "Fogo") or (elementoCarta2 == "Agua" and elementoCarta1 == "Terra"):
@@ -134,56 +145,61 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
 
         #verificação de nível
         if levelCarta1 > levelCarta2:
-            self.Jogador2.pontuacao = self.Jogador2.pontuacao - (levelCarta1-levelCarta2)
+            print("O")
+            self.marcarVitoriaBatalha(1, pos)
+            self.campoDeJogo.posicoesOcupadas[pos] = 1
+            self.verificarVitoria()
 
         elif levelCarta2 > levelCarta1:
-            self.Jogador1.pontuacao = self.Jogador1.pontuacao - (levelCarta2-levelCarta1)
-
+            print("X")
+            self.marcarVitoriaBatalha(2, pos)
+            self.campoDeJogo.posicoesOcupadas[pos] = 2
+            self.verificarVitoria()
         else:
             print("Empate")
+            self.preencherCampo(3, pos)
+            self.campoDeJogo.posicoesJ1[pos] = cartas.Cartas("",0)
+            self.campoDeJogo.posicoesJ2[pos] = cartas.Cartas("",0)
 
         #zerando a carta da vez pois finalizou a jogada
         self.Jogador1.cartaDaVez = cartas.Cartas("", 0)
         self.Jogador2.cartaDaVez = cartas.Cartas("", 0)
 
-        self.ponto_Jogador1.setText(self._translate(self.ponto_Jogador1.text(), str(self.Jogador1.pontuacao)))
-        self.pontos_Jogador2.setText(self._translate(self.pontos_Jogador2.text(), str(self.Jogador2.pontuacao)))
+    def verificarVitoria(self):
+        print(self.campoDeJogo.posicoesOcupadas)
 
-        #verificando se há pontuação 0
-        if self.Jogador1.pontuacao <= 0 or self.Jogador2.pontuacao <= 0:
-            self.estadoJogo.andamentoJogo = False
+        resultado = self.campoDeJogo.analisePosicoes()
 
-    def verificarVencedor(self):
-        # aumenta o turno para finalizar o jogo
+        if resultado == 1:
+            self.vitoriaPartida(1)
+            self.estadoJogo.finalizarJogo()
 
-        if self.Jogador1.pontuacao == self.Jogador2.pontuacao:
-            return "Essa partida foi um empate."
+        elif resultado == 2:
+            self.vitoriaPartida(2)
+            self.estadoJogo.finalizarJogo()
 
-        elif self.Jogador1.pontuacao > self.Jogador2.pontuacao:
-            return "Vitória Jogador 1"
+        elif resultado == 3:
+            self.vitoriaPartida(3)
+            self.estadoJogo.finalizarJogo()
 
         else:
-            return "Vitória Jogador 2"
+            return False
 
     def estadoInicial(self):
+        self.UI_inicial()
         self.estadoJogo = gamestate.GameState(True, 0)
         self.Jogador1 = jogador.Jogador([], True)
         self.Jogador2 = jogador.Jogador([], False)
         self.cartasDoJogo = cartas.Baralho()
         self.alterarBtnAcao(0)
         self.dividirCartas()
+        self.campoDeJogo = campovelha.Campo()
 
     def mudancaEstado(self):
-        if self.acaoBtn.text() == "Iniciar jogo":
+        if self.estadoJogo.andamentoJogo == False:
             self.estadoInicial()
 
         else:
-            if self.estadoJogo.contadorTurno == 5:
-                self.Jogador1.cartas = []
-                self.Jogador2.cartas = []
-                self.dividirCartas()
-                self.habilitarBotoes()
-
             #verificar de quem é a ver
             if self.Jogador1.turno == True:
                 self.statusBtnAcao(False)
@@ -202,45 +218,13 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
                 while self.Jogador2.turno == True:
                     continue
 
-                #realizar o aumento de turno após jogada do jogador 2
-                self.estadoJogo.aumentarTurno()
+        #realizar o aumento de turno após jogada do jogador 2
+        self.estadoJogo.aumentarTurno()
 
-                #Verificar se houve algum vencedor na rodada
-                #self.verificarVencedor()
-
-        '''
-        while self.estadoJogo.andamentoJogo == True and self.estadoJogo.contadorTurno < 10:
-
-            #não foi definido o vencedor, necessário reembaralhar
-            if self.estadoJogo.contadorTurno == 5:
-                self.Jogador1.cartas = []
-                self.Jogador2.cartas = []
-                self.dividirCartas()
-                self.habilitarBotoes()
-
-            self.esconderCartas2()
-            self.mostrarCartas1()
-
-            #vez do jogador 1
-            while self.Jogador1.turno == True:
-                continue
-
-            #vez do jogador 2
-            while self.Jogador2.turno == True:
-                continue
-
-            #aumentar um turno
-            self.estadoJogo.aumentarTurno()
-
-            #verificação das jogadas
-            self.verificarJogada()
-
-        #remover cartas do jogo
-        self.desabilitarBotoes()
-
-        #Escrevendo vencedor
-        self.label_3.setText(self._translate(self.label_3.text(), self.verificarVencedor()))
-
-        #Reiniciando interface para nova partida
-        self.UI_inicial()
-        '''
+        if self.estadoJogo.contadorTurno == 10:
+            self.Jogador1.cartas = []
+            self.Jogador2.cartas = []
+            self.dividirCartas()
+            self.habilitarBotoes()
+            print(self.Jogador1.cartas)
+            print(self.Jogador2.cartas)

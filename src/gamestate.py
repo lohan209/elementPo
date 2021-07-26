@@ -9,3 +9,7 @@ class GameState():
 
     def aumentarTurno(self):
         self.contadorTurno = self.contadorTurno + 1;
+
+    def mudancaTurno(self,jogadorCorrente, jogadorOposto):
+        jogadorCorrente.turno = not jogadorCorrente.turno
+        jogadorOposto.turno = not jogadorOposto.turno
