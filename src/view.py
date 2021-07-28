@@ -10,6 +10,24 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_ElementPo(object):
+    def colocarBgImage(self, carta, elemento):
+        if (elemento == "Fogo"):
+            carta.setStyleSheet("background-image: url('./fogo.jfif');"
+                            "color: #FFF;"
+                            "font-weight: bold;")
+        elif (elemento == "Agua"):
+            carta.setStyleSheet("background-image: url('./agua.jpg');"
+                            "color: #FFF;"
+                            "font-weight: bold;")
+        elif (elemento == "Ar"):
+            carta.setStyleSheet("background-image: url('./ar.jpg');"
+                            "color: #FFF;"
+                            "font-weight: bold;")
+        elif (elemento == "Terra"):
+            carta.setStyleSheet("background-image: url('./terra.jpg');"
+                            "color: #FFF;"
+                            "font-weight: bold;")
+
     def setupUi(self, ElementPo):
         self._translate = QtCore.QCoreApplication.translate
 
@@ -20,43 +38,33 @@ class Ui_ElementPo(object):
         ElementPo.setStyleSheet("")
         self.carta1 = QtWidgets.QPushButton(ElementPo)
         self.carta1.setGeometry(QtCore.QRect(30, 170, 113, 32))
-        self.carta1.setStyleSheet("background-color: rgb(245, 211, 179);")
         self.carta1.setObjectName("carta1")
         self.carta2 = QtWidgets.QPushButton(ElementPo)
         self.carta2.setGeometry(QtCore.QRect(30, 220, 113, 32))
-        self.carta2.setStyleSheet("background-color: rgb(245, 211, 179);")
         self.carta2.setObjectName("carta2")
         self.carta3 = QtWidgets.QPushButton(ElementPo)
         self.carta3.setGeometry(QtCore.QRect(30, 270, 113, 32))
-        self.carta3.setStyleSheet("background-color: rgb(245, 211, 179);")
         self.carta3.setObjectName("carta3")
         self.carta4 = QtWidgets.QPushButton(ElementPo)
         self.carta4.setGeometry(QtCore.QRect(30, 320, 113, 32))
-        self.carta4.setStyleSheet("background-color: rgb(245, 211, 179);")
         self.carta4.setObjectName("carta4")
         self.carta5 = QtWidgets.QPushButton(ElementPo)
         self.carta5.setGeometry(QtCore.QRect(30, 370, 113, 32))
-        self.carta5.setStyleSheet("background-color: rgb(245, 211, 179);")
         self.carta5.setObjectName("carta5")
         self.carta6 = QtWidgets.QPushButton(ElementPo)
         self.carta6.setGeometry(QtCore.QRect(640, 170, 113, 32))
-        self.carta6.setStyleSheet("background-color: rgb(176, 196, 222);")
         self.carta6.setObjectName("carta6")
         self.carta7 = QtWidgets.QPushButton(ElementPo)
         self.carta7.setGeometry(QtCore.QRect(640, 220, 113, 32))
-        self.carta7.setStyleSheet("background-color: rgb(176, 196, 222);")
         self.carta7.setObjectName("carta7")
         self.carta8 = QtWidgets.QPushButton(ElementPo)
         self.carta8.setGeometry(QtCore.QRect(640, 270, 113, 32))
-        self.carta8.setStyleSheet("background-color: rgb(176, 196, 222);")
         self.carta8.setObjectName("carta8")
         self.carta9 = QtWidgets.QPushButton(ElementPo)
         self.carta9.setGeometry(QtCore.QRect(640, 320, 113, 32))
-        self.carta9.setStyleSheet("background-color: rgb(176, 196, 222);")
         self.carta9.setObjectName("carta9")
         self.carta10 = QtWidgets.QPushButton(ElementPo)
         self.carta10.setGeometry(QtCore.QRect(640, 370, 113, 32))
-        self.carta10.setStyleSheet("background-color: rgb(176, 196, 222);")
         self.carta10.setObjectName("carta10")
         self.cartap1_1 = QtWidgets.QLabel(ElementPo)
         self.cartap1_1.setEnabled(True)
