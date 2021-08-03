@@ -17,37 +17,37 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self._translate = QtCore.QCoreApplication.translate
 
         #Botões de ação das cartas
-        self.carta1.clicked.connect(lambda: self.definirCarta(1, self.carta1))
-        self.carta2.clicked.connect(lambda: self.definirCarta(2, self.carta2))
-        self.carta3.clicked.connect(lambda: self.definirCarta(3, self.carta3))
-        self.carta4.clicked.connect(lambda: self.definirCarta(4, self.carta4))
-        self.carta5.clicked.connect(lambda: self.definirCarta(5, self.carta5))
-        self.carta6.clicked.connect(lambda: self.definirCarta(6, self.carta6))
-        self.carta7.clicked.connect(lambda: self.definirCarta(7, self.carta7))
-        self.carta8.clicked.connect(lambda: self.definirCarta(8, self.carta8))
-        self.carta9.clicked.connect(lambda: self.definirCarta(9, self.carta9))
-        self.carta10.clicked.connect(lambda: self.definirCarta(10, self.carta10))
+        self.carta1.clicked.connect(lambda: self.Jogador1.definirCarta(1, self.carta1))
+        self.carta2.clicked.connect(lambda: self.Jogador1.definirCarta(2, self.carta2))
+        self.carta3.clicked.connect(lambda: self.Jogador1.definirCarta(3, self.carta3))
+        self.carta4.clicked.connect(lambda: self.Jogador1.definirCarta(4, self.carta4))
+        self.carta5.clicked.connect(lambda: self.Jogador1.definirCarta(5, self.carta5))
+        self.carta6.clicked.connect(lambda: self.Jogador2.definirCarta(6, self.carta6))
+        self.carta7.clicked.connect(lambda: self.Jogador2.definirCarta(7, self.carta7))
+        self.carta8.clicked.connect(lambda: self.Jogador2.definirCarta(8, self.carta8))
+        self.carta9.clicked.connect(lambda: self.Jogador2.definirCarta(9, self.carta9))
+        self.carta10.clicked.connect(lambda: self.Jogador2.definirCarta(10, self.carta10))
 
         #Botões de ação das cartas
-        self.pos_1.clicked.connect(lambda: self.definirCampo(0))
-        self.pos_2.clicked.connect(lambda: self.definirCampo(1))
-        self.pos_3.clicked.connect(lambda: self.definirCampo(2))
-        self.pos_4.clicked.connect(lambda: self.definirCampo(3))
-        self.pos_5.clicked.connect(lambda: self.definirCampo(4))
-        self.pos_6.clicked.connect(lambda: self.definirCampo(5))
-        self.pos_7.clicked.connect(lambda: self.definirCampo(6))
-        self.pos_8.clicked.connect(lambda: self.definirCampo(7))
-        self.pos_9.clicked.connect(lambda: self.definirCampo(8))
+        self.pos_1.clicked.connect(lambda: self.Jogador1.definirCampo(1, self.campoDeJogo, 0))
+        self.pos_2.clicked.connect(lambda: self.Jogador1.definirCampo(1, self.campoDeJogo, 1))
+        self.pos_3.clicked.connect(lambda: self.Jogador1.definirCampo(1, self.campoDeJogo, 2))
+        self.pos_4.clicked.connect(lambda: self.Jogador1.definirCampo(1, self.campoDeJogo, 3))
+        self.pos_5.clicked.connect(lambda: self.Jogador1.definirCampo(1, self.campoDeJogo, 4))
+        self.pos_6.clicked.connect(lambda: self.Jogador1.definirCampo(1, self.campoDeJogo, 5))
+        self.pos_7.clicked.connect(lambda: self.Jogador1.definirCampo(1, self.campoDeJogo, 6))
+        self.pos_8.clicked.connect(lambda: self.Jogador1.definirCampo(1, self.campoDeJogo, 7))
+        self.pos_9.clicked.connect(lambda: self.Jogador1.definirCampo(1, self.campoDeJogo, 8))
 
-        self.pos_1_J2.clicked.connect(lambda: self.definirCampo(0))
-        self.pos_2_J2.clicked.connect(lambda: self.definirCampo(1))
-        self.pos_3_J2.clicked.connect(lambda: self.definirCampo(2))
-        self.pos_4_J2.clicked.connect(lambda: self.definirCampo(3))
-        self.pos_5_J2.clicked.connect(lambda: self.definirCampo(4))
-        self.pos_6_J2.clicked.connect(lambda: self.definirCampo(5))
-        self.pos_7_J2.clicked.connect(lambda: self.definirCampo(6))
-        self.pos_8_J2.clicked.connect(lambda: self.definirCampo(7))
-        self.pos_9_J2.clicked.connect(lambda: self.definirCampo(8))
+        self.pos_1_J2.clicked.connect(lambda: self.Jogador2.definirCampo(2, self.campoDeJogo, 0))
+        self.pos_2_J2.clicked.connect(lambda: self.Jogador2.definirCampo(2, self.campoDeJogo, 1))
+        self.pos_3_J2.clicked.connect(lambda: self.Jogador2.definirCampo(2, self.campoDeJogo, 2))
+        self.pos_4_J2.clicked.connect(lambda: self.Jogador2.definirCampo(2, self.campoDeJogo, 3))
+        self.pos_5_J2.clicked.connect(lambda: self.Jogador2.definirCampo(2, self.campoDeJogo, 4))
+        self.pos_6_J2.clicked.connect(lambda: self.Jogador2.definirCampo(2, self.campoDeJogo, 5))
+        self.pos_7_J2.clicked.connect(lambda: self.Jogador2.definirCampo(2, self.campoDeJogo, 6))
+        self.pos_8_J2.clicked.connect(lambda: self.Jogador2.definirCampo(2, self.campoDeJogo, 7))
+        self.pos_9_J2.clicked.connect(lambda: self.Jogador2.definirCampo(2, self.campoDeJogo, 8))
 
         self.estadoJogo = gamestate.GameState(False, 0)
         self.Jogador1 = None;
@@ -61,11 +61,11 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
     #CONTROLE DAS REGRAS DO JOGO
     def threadRun(self): #running threads
         self.is_running = True
-        t = threading.Thread(target=self.mudancaEstado, name="start")
+        t = threading.Thread(target=self.jogo, name="start")
         t.start()
 
-    def dividirCartas(self):
-        divisaoCartas = self.cartasDoJogo.embaralhar()
+    def preparacaoMaos(self):
+        divisaoCartas = self.cartasDoJogo.embaralhar(self.Jogador1, self.Jogador2) #Iniciar partida - # Divisao de cartas
 
         self.carta1.setText(self._translate("Vazio", divisaoCartas[0].elemento+', '+str(divisaoCartas[0].level)))
         self.colocarBgImage(self.carta1, divisaoCartas[0].elemento)
@@ -88,153 +88,118 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self.carta10.setText(self._translate("Vazio", divisaoCartas[9].elemento+', '+str(divisaoCartas[9].level)))
         self.colocarBgImage(self.carta10, divisaoCartas[9].elemento)
 
-        i = 0
-        while i < 5:
-            self.Jogador1.cartas.append(divisaoCartas[i])
-            i = i +1;
-
-        while i < 10:
-            self.Jogador2.cartas.append(divisaoCartas[i])
-            i = i + 1;
-
-    def definirCarta(self, cartaEscolhida, cartaRemover):
+    def habilitarCampo(self, jogadorDaVez):
         #verificar se a carta escolhida é o jogador 1 ou 2, para definir qual será o próximo turno
-        if cartaEscolhida <= 5:
-            self.Jogador1.cartaDaVez = self.Jogador1.cartas[cartaEscolhida - 1]
+        if jogadorDaVez == 1:
             self.esconderCartas1()
             self.mostrarCampo(1, self.campoDeJogo)
 
         else:
-            self.Jogador2.cartaDaVez = self.Jogador2.cartas[cartaEscolhida - 6]
             self.esconderCartas2()
             self.mostrarCampo(2, self.campoDeJogo)
 
-        cartaRemover.setEnabled(False) #desabilitar botão que representa a carta das opções
+    def estadoInicial(self): #iniciar partida
+        self.UI_inicial() #Preparar interface para início do jogo
+        self.estadoJogo = gamestate.GameState(True, 0) #Alterar estado do jogo para "Em andamento"
+        self.Jogador1 = jogador.Jogador([], True) #Criar jogador 1 e jogador 2
+        self.Jogador2 = jogador.Jogador([], False) #Criar jogador 1 e jogador 2
+        self.cartasDoJogo = cartas.Baralho() #Criar baralho
+        self.alterarBtnAcao(0) #Alterar botão inicial para botão de ação de passar a vez
+        self.preparacaoMaos() #Seleção aleatória de 10 cartas
+        self.campoDeJogo = campovelha.Campo() #Criar o campo da velha
 
-    def definirCampo(self, pos):
-        if self.Jogador1.turno == True:
-            self.campoDeJogo.posicoesJ1[pos].elemento = self.Jogador1.cartaDaVez.elemento
-            self.campoDeJogo.posicoesJ1[pos].level = self.Jogador1.cartaDaVez.level
-
-            self.preencherCampo(1, pos)
-
-            self.estadoJogo.mudancaTurno(self.Jogador1, self.Jogador2)
-            self.jogada_J1()
-
-        else:
-            self.campoDeJogo.posicoesJ2[pos].elemento = self.Jogador2.cartaDaVez.elemento
-            self.campoDeJogo.posicoesJ2[pos].level = self.Jogador2.cartaDaVez.level
-
-            self.preencherCampo(2, pos)
-
-            self.estadoJogo.mudancaTurno(self.Jogador2, self.Jogador1)
-            self.jogada_J2()
-
-        self.verificarBatalhaCampo(pos)
-
-    def verificarBatalhaCampo(self, pos):
-        if self.campoDeJogo.posicoesJ1[pos].elemento != "" and self.campoDeJogo.posicoesJ2[pos].elemento != "":
-            self.verificarJogada(pos)
-
-    def verificarJogada(self, pos):
-        #declarando elemento e level carta jogador 1
-        elementoCarta1 = self.campoDeJogo.posicoesJ1[pos].elemento
-        levelCarta1 = self.campoDeJogo.posicoesJ1[pos].level
-
-        #declarando elemento e level carta jogador 2
-        elementoCarta2 = self.campoDeJogo.posicoesJ2[pos].elemento
-        levelCarta2 = self.campoDeJogo.posicoesJ2[pos].level
-
-        #multiplicando carta jogador 1
-        if (elementoCarta2 == "Fogo" and elementoCarta1 == "Agua") or (elementoCarta2 == "Terra" and elementoCarta1 == "Ar") or (elementoCarta2 == "Ar" and elementoCarta1 == "Fogo") or (elementoCarta2 == "Agua" and elementoCarta1 == "Terra"):
-            levelCarta1 = levelCarta1 * 2
-
-        #multiplicação do LEVEL da carta do jogador 2
-        elif (elementoCarta1 == "Terra" and elementoCarta2 == "Ar") or (elementoCarta1 == "Agua" and elementoCarta2 == "Terra") or (elementoCarta1 == "Ar" and elementoCarta2 == "Fogo") or (elementoCarta1 == "Fogo" and elementoCarta2 == "Agua"):
-            levelCarta2 = levelCarta2 * 2
-
-        #verificação de nível
-        if levelCarta1 > levelCarta2:
-            print("O")
-            self.marcarVitoriaBatalha(1, pos)
-            self.campoDeJogo.posicoesOcupadas[pos] = 1
-            self.verificarVitoria()
-
-        elif levelCarta2 > levelCarta1:
-            print("X")
-            self.marcarVitoriaBatalha(2, pos)
-            self.campoDeJogo.posicoesOcupadas[pos] = 2
-            self.verificarVitoria()
-        else:
-            print("Empate")
-            self.preencherCampo(3, pos)
-            self.campoDeJogo.posicoesJ1[pos] = cartas.Cartas("",0)
-            self.campoDeJogo.posicoesJ2[pos] = cartas.Cartas("",0)
-
-        #zerando a carta da vez pois finalizou a jogada
-        self.Jogador1.cartaDaVez = cartas.Cartas("", 0)
-        self.Jogador2.cartaDaVez = cartas.Cartas("", 0)
-
-    def verificarVitoria(self):
-        print(self.campoDeJogo.posicoesOcupadas)
-
-        resultado = self.campoDeJogo.analisePosicoes()
-
-        if resultado == 1:
-            self.vitoriaPartida(1)
-            self.estadoJogo.finalizarJogo()
-
-        elif resultado == 2:
-            self.vitoriaPartida(2)
-            self.estadoJogo.finalizarJogo()
-
-        elif resultado == 3:
-            self.vitoriaPartida(3)
-            self.estadoJogo.finalizarJogo()
-
-        else:
-            return False
-
-    def estadoInicial(self):
-        self.UI_inicial()
-        self.estadoJogo = gamestate.GameState(True, 0)
-        self.Jogador1 = jogador.Jogador([], True)
-        self.Jogador2 = jogador.Jogador([], False)
-        self.cartasDoJogo = cartas.Baralho()
-        self.alterarBtnAcao(0)
-        self.dividirCartas()
-        self.campoDeJogo = campovelha.Campo()
-
-    def mudancaEstado(self):
-        if self.estadoJogo.andamentoJogo == False:
-            self.estadoInicial()
+    def jogo(self):
+        if self.estadoJogo.andamentoJogo == False: #iniciar partida - Verificar se o jogo está em andamento
+            self.estadoInicial() #iniciar partida
 
         else:
             #verificar de quem é a ver
-            if self.Jogador1.turno == True:
-                self.statusBtnAcao(False)
-                self.esconderCartas2()
-                self.mostrarCartas1()
+            if self.Jogador1.turno == True: #Iniciar jogada
+                self.statusBtnAcao(False) #Iniciar jogada
+                self.esconderCartas2() #Iniciar jogada
+                self.mostrarCartas1() #Iniciar jogada
 
                 # Aguardando o usuário 1 escolher carta, campo e passar o turno
-                while self.Jogador1.turno == True:
-                    continue
+                while self.Jogador1.cartaDaVez.elemento == "": #Escolher carta
+                    continue #Escolher carta
+
+                #habilitar campo de escolha do jogador 1
+                self.habilitarCampo(1) #Escolher carta
+
+                # Aguardando jogador 1 selecionar um campo
+                while self.Jogador1.campoSelecionado == -1: #Escolher campo
+                    continue #Escolher campo
+
+                # Marcar o campo que foi preenchido pelo jogador 1 para que o jogador 2 possa ver
+                self.preencherCampo(1, self.Jogador1.campoSelecionado) #Escolher campo
+
+                #verificar se há batalha em campo
+                codigoVencedor = self.campoDeJogo.verificarBatalhaCampo(self.Jogador1.campoSelecionado) #Escolher campo
+
+                #verificar se há vencedor da batalha
+                if codigoVencedor != 404: #Escolher campo
+                    self.marcarVencedorBatalha(self.campoDeJogo.posicoesOcupadas[self.Jogador1.campoSelecionado], self.Jogador1.campoSelecionado) #Escolher campo
+
+                #alterar o turno do jogador 1 para o 2
+                self.estadoJogo.mudancaTurno(self.Jogador1, self.Jogador2) #Escolher campo
+
+                #zerar o campo escolhido e a carta escolhida pelo jogador 1
+                self.Jogador1.reinicioJogada() #Escolher campo
+
+                #alteração de interface para finalizar jogada do jogador 1.
+                self.jogada_J1() #Escolher campo
 
             else:
                 self.mostrarCartas2()
                 self.statusBtnAcao(False)
-
-                #Aguardando o usuário 2 escolher carta, campo e passar o turno
-                while self.Jogador2.turno == True:
+                # Aguardando o usuário 2 escolher carta;
+                while self.Jogador2.cartaDaVez.elemento == "":
                     continue
 
-        #realizar o aumento de turno após jogada do jogador 2
-        self.estadoJogo.aumentarTurno()
+                #mostrando o campo para o jogador 2
+                self.habilitarCampo(2)
 
-        if self.estadoJogo.contadorTurno == 10:
-            self.Jogador1.cartas = []
-            self.Jogador2.cartas = []
-            self.dividirCartas()
-            self.habilitarBotoes()
-            print(self.Jogador1.cartas)
-            print(self.Jogador2.cartas)
+                #aguardando jogador escolher o cmapo;
+                while self.Jogador2.campoSelecionado == -1:
+                    continue
+
+                #pintar campo de azul para demarcar que tem peça lá
+                self.preencherCampo(2, self.Jogador2.campoSelecionado)
+
+                #verificar se há batalha em campo
+                codigoVencedor = self.campoDeJogo.verificarBatalhaCampo(self.Jogador2.campoSelecionado)
+
+                if codigoVencedor != 404:
+                    self.marcarVencedorBatalha(self.campoDeJogo.posicoesOcupadas[self.Jogador2.campoSelecionado], self.Jogador2.campoSelecionado)
+
+                #alterar o turno
+                self.estadoJogo.mudancaTurno(self.Jogador2, self.Jogador1)
+
+                #zerar o campo escolhido e a carta escolhida pelo jogador 1
+                self.Jogador2.reinicioJogada()
+
+                #esconder o campo do jogador 2 e habilitar botão de ação
+                self.jogada_J2()
+
+            #ALTERA A LABEL STATUS PARA MOSTRAR DE QUEM É A VEZ
+            if self.estadoJogo.jogadorDaVez == self.Jogador1: #Escolher campo
+                self.alterarLabelStatus(1)
+            elif self.estadoJogo.jogadorDaVez == self.Jogador2: #Escolher campo
+                self.alterarLabelStatus(2)
+
+            self.estadoJogo.aumentarTurno()
+
+            #FAZ VERIFICAÇÃO DE VITÓRIA DE JOGO
+            self.estadoJogo.definicaoVencedor = self.campoDeJogo.verificarVitoria() #Escolher campo - verificacao vitoria
+            if self.estadoJogo.definicaoVencedor != 0:
+                self.vitoriaPartida(self.estadoJogo.definicaoVencedor)
+                self.estadoJogo.finalizarJogo()
+
+            if self.estadoJogo.contadorTurno == 11: #Iniciar jogada
+                self.estadoJogo.contadorTurno = 0;
+                self.Jogador1.cartas = []
+                self.Jogador2.cartas = []
+                self.preparacaoMaos()
+                self.habilitarBotoes()
+                print(self.Jogador1.cartas)
+                print(self.Jogador2.cartas)

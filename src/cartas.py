@@ -32,24 +32,37 @@ class Baralho():
             Cartas("Ar", 5)
         ]
 
-    def embaralhar(self):
+    def embaralhar(self, jogador1, jogador2):
         count = 0;
-        verificar = True
+        posicaoValida = True
         cartasDoJogo = []
 
         while count != 10:
-            while verificar:
+            while posicaoValida:
                 try:
                     numCarta = random.randint(0, 19)
                     verificarCarta = self.baralho[numCarta]
-                    verificar = False
+                    posicaoValida = False
                 except:
-                    verificar = True
+                    posicaoValida = True
 
-            verificar = True
+            posicaoValida = True
             count = count + 1
 
             cartasDoJogo.append(self.baralho[numCarta])
             del(self.baralho[numCarta])
 
+        self.dividirCartar(jogador1, jogador2, cartasDoJogo)
+
         return cartasDoJogo
+
+    def dividirCartar(self, jogador1, jogador2, cartasDoJogo):
+        print(cartasDoJogo)
+        i = 0
+        while i < 5:
+            jogador1.cartas.append(cartasDoJogo[i])
+            i = i + 1;
+
+        while i < 10:
+            jogador2.cartas.append(cartasDoJogo[i])
+            i = i + 1;
