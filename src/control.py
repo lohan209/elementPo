@@ -61,7 +61,7 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
     #CONTROLE DAS REGRAS DO JOGO
     def threadRun(self): #running threads
         self.is_running = True
-        t = threading.Thread(target=self.jogo, name="start")
+        t = threading.Thread(target=self.iniciarjogo, name="start")
         t.start()
 
     def preparacaoMaos(self):
@@ -108,7 +108,7 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self.preparacaoMaos() #Seleção aleatória de 10 cartas
         self.campoDeJogo = campovelha.Campo() #Criar o campo da velha
 
-    def jogo(self):
+    def iniciarjogo(self):
         if self.estadoJogo.andamentoJogo == False: #iniciar partida - Verificar se o jogo está em andamento
             self.estadoInicial() #iniciar partida
 
