@@ -34,7 +34,6 @@ class Baralho():
 
     def embaralhar(self, jogador1, jogador2):
         count = 0;
-        posicaoValida = True
         cartasDoJogo = []
 
         while count != 10:

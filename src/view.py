@@ -513,7 +513,7 @@ class Ui_ElementPo(object):
     def statusBtnAcao(self, status):
         self.acaoBtn.setEnabled(status)
 
-    def preencherCampo(self, jogador, posCampo):
+    def colorirCampo(self, jogador, posCampo):
         btnGroup = [self.pos_1, self.pos_2, self.pos_3, self.pos_4, self.pos_5, self.pos_6, self.pos_7, self.pos_8,
                     self.pos_9]
         btnGroup2 = [self.pos_1_J2, self.pos_2_J2, self.pos_3_J2, self.pos_4_J2, self.pos_5_J2, self.pos_6_J2,
@@ -567,12 +567,15 @@ class Ui_ElementPo(object):
     def jogada_J1(self):
         self.alterarBtnAcao(1)
         self.esconderCampo_J1()
+        self.alterarLabelStatus(2)
 
     def jogada_J2(self):
         self.alterarBtnAcao(0)
         self.esconderCampo_J2()
+        self.alterarLabelStatus(1)
 
     def alterarLabelStatus(self, jogadorDaVez):
+
         self.status_jogo.setText(self._translate(self.status_jogo.text(), "Vez do Jogador " + str(jogadorDaVez)))
         if jogadorDaVez == 1:
             self.status_jogo.setStyleSheet("color: rgb(245, 211, 179);")

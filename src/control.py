@@ -88,6 +88,15 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self.carta10.setText(self._translate("Vazio", divisaoCartas[9].elemento+', '+str(divisaoCartas[9].level)))
         self.colocarBgImage(self.carta10, divisaoCartas[9].elemento)
 
+    def redistribuicaoCarta(self):
+        self.estadoJogo.contadorTurno = 0;
+        self.Jogador1.cartas = []
+        self.Jogador2.cartas = []
+        self.preparacaoMaos()
+        self.habilitarBotoes()
+        print(self.Jogador1.cartas)
+        print(self.Jogador2.cartas)
+
     def habilitarCampo(self, jogadorDaVez):
         #verificar se a carta escolhida é o jogador 1 ou 2, para definir qual será o próximo turno
         if jogadorDaVez == 1:
@@ -131,14 +140,14 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
                     continue #Escolher campo
 
                 # Marcar o campo que foi preenchido pelo jogador 1 para que o jogador 2 possa ver
-                self.preencherCampo(1, self.Jogador1.campoSelecionado) #Escolher campo
+                self.colorirCampo(1, self.Jogador1.campoSelecionado) #Escolher campo
 
                 #verificar se há batalha em campo
                 codigoVencedor = self.campoDeJogo.verificarBatalhaCampo(self.Jogador1.campoSelecionado) #Escolher campo
 
                 #verificar se há vencedor da batalha
                 if codigoVencedor != 404: #Escolher campo
-                    self.marcarVencedorBatalha(self.campoDeJogo.posicoesOcupadas[self.Jogador1.campoSelecionado], self.Jogador1.campoSelecionado) #Escolher campo
+                    self.marcarVencedorBatalha(self.campoDeJogo.posicoesOcupadas[self.Jogador1.campoSelecionado], self.Jogador1.campoSelecionado) #Escolher campo - Verificar batalha
 
                 #alterar o turno do jogador 1 para o 2
                 self.estadoJogo.mudancaTurno(self.Jogador1, self.Jogador2) #Escolher campo
@@ -150,8 +159,10 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
                 self.jogada_J1() #Escolher campo
 
             else:
-                self.mostrarCartas2()
                 self.statusBtnAcao(False)
+                self.esconderCartas1() #Iniciar jogada
+                self.mostrarCartas2()
+
                 # Aguardando o usuário 2 escolher carta;
                 while self.Jogador2.cartaDaVez.elemento == "":
                     continue
@@ -164,7 +175,7 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
                     continue
 
                 #pintar campo de azul para demarcar que tem peça lá
-                self.preencherCampo(2, self.Jogador2.campoSelecionado)
+                self.colorirCampo(2, self.Jogador2.campoSelecionado)
 
                 #verificar se há batalha em campo
                 codigoVencedor = self.campoDeJogo.verificarBatalhaCampo(self.Jogador2.campoSelecionado)
@@ -181,25 +192,14 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
                 #esconder o campo do jogador 2 e habilitar botão de ação
                 self.jogada_J2()
 
-            #ALTERA A LABEL STATUS PARA MOSTRAR DE QUEM É A VEZ
-            if self.estadoJogo.jogadorDaVez == self.Jogador1: #Escolher campo
-                self.alterarLabelStatus(1)
-            elif self.estadoJogo.jogadorDaVez == self.Jogador2: #Escolher campo
-                self.alterarLabelStatus(2)
-
             self.estadoJogo.aumentarTurno()
+
+            if self.estadoJogo.contadorTurno == 11: #Iniciar jogada
+                self.redistribuicaoCarta()
 
             #FAZ VERIFICAÇÃO DE VITÓRIA DE JOGO
             self.estadoJogo.definicaoVencedor = self.campoDeJogo.verificarVitoria() #Escolher campo - verificacao vitoria
+
             if self.estadoJogo.definicaoVencedor != 0:
                 self.vitoriaPartida(self.estadoJogo.definicaoVencedor)
                 self.estadoJogo.finalizarJogo()
-
-            if self.estadoJogo.contadorTurno == 11: #Iniciar jogada
-                self.estadoJogo.contadorTurno = 0;
-                self.Jogador1.cartas = []
-                self.Jogador2.cartas = []
-                self.preparacaoMaos()
-                self.habilitarBotoes()
-                print(self.Jogador1.cartas)
-                print(self.Jogador2.cartas)

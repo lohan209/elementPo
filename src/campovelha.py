@@ -39,6 +39,14 @@ class Campo():
             0
         ]
 
+    def inserirCartaCampo(self, pos, elemento, level):
+        campo.posicoesJ1[pos].elemento = elemento
+        campo.posicoesJ1[pos].level = level
+
+    def inserirCartaCampo2(self, pos, elemento, level):
+        campo.posicoesJ2[pos].elemento = elemento
+        campo.posicoesJ2[pos].level = level
+
     def analisePosicoes(self):
         print("Entrou na analisePosicoes")
 
@@ -84,7 +92,7 @@ class Campo():
         elif self.posicoesOcupadas[2] == 2 and self.posicoesOcupadas[5] == 2 and self.posicoesOcupadas[8] == 2:
             return (2)
 
-        # verificando horizontal 3
+        # verificando diagonal 3
         elif self.posicoesOcupadas[2] == 1 and self.posicoesOcupadas[4] == 1 and self.posicoesOcupadas[6] == 1:
             return (1)
         elif self.posicoesOcupadas[2] == 2 and self.posicoesOcupadas[4] == 2 and self.posicoesOcupadas[6] == 2:
@@ -97,13 +105,11 @@ class Campo():
             while count < 9:
                 if self.posicoesOcupadas[count] != 0:
                     count = count + 1
-                else:
-                    break
 
             if count == 9:
                 return (3)
-
-            print("Saindo do loop")
+            else:
+                return (0)
 
     def verificarBatalhaCampo(self, pos):
         if self.posicoesJ1[pos].elemento != "" and self.posicoesJ2[pos].elemento != "":
@@ -111,7 +117,7 @@ class Campo():
         else:
             return 404
 
-    def verificarJogada(self, pos):
+    def verificarJogada(self, pos): #Escolher campo - Verificar batalha
         #declarando elemento e level carta jogador 1
         elementoCarta1 = self.posicoesJ1[pos].elemento
         levelCarta1 = self.posicoesJ1[pos].level
@@ -144,7 +150,7 @@ class Campo():
             print("Empate")
             self.posicoesJ1[pos] = cartas.Cartas("",0)
             self.posicoesJ2[pos] = cartas.Cartas("",0)
-            return 404
+            return 400
 
     def verificarVitoria(self):
         print(self.posicoesOcupadas)
