@@ -24,7 +24,7 @@ class Jogador():
 
     def definirCampo(self, jogadorDaVez, campo, pos):
         if jogadorDaVez == 1:
-            campo.inserirCartaCampo1(pos, self.cartaDaVez.elemento, self.cartaDaVez.level)
+            campo.inserirCartaCampo(pos, self.cartaDaVez.elemento, self.cartaDaVez.level)
         else:
             campo.inserirCartaCampo2(pos, self.cartaDaVez.elemento, self.cartaDaVez.level)
         self.campoSelecionado = pos
