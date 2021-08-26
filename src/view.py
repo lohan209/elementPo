@@ -547,7 +547,7 @@ class Ui_ElementPo(object):
             resultLabelGroup[posicaoVencedor].setText(self._translate(resultLabelGroup[posicaoVencedor].text(), "J2"))
             resultLabelGroup[posicaoVencedor].show()
         else:
-            self.preencherCampo(3, posicaoVencedor)
+            self.colorirCampo(3, posicaoVencedor)
 
     def vitoriaPartida(self, jogador):
 

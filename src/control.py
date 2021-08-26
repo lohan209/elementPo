@@ -92,6 +92,7 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
         self.estadoJogo.contadorTurno = 0;
         self.Jogador1.cartas = []
         self.Jogador2.cartas = []
+        print("teste")
         self.preparacaoMaos()
         self.habilitarBotoes()
         print(self.Jogador1.cartas)
@@ -144,7 +145,7 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
 
                 #verificar se há batalha em campo
                 codigoVencedor = self.campoDeJogo.verificarBatalhaCampo(self.Jogador1.campoSelecionado) #Escolher campo
-
+                print(codigoVencedor)
                 #verificar se há vencedor da batalha
                 if codigoVencedor != 404: #Escolher campo
                     self.marcarVencedorBatalha(self.campoDeJogo.posicoesOcupadas[self.Jogador1.campoSelecionado], self.Jogador1.campoSelecionado) #Escolher campo - Verificar batalha
@@ -194,7 +195,9 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
 
             self.estadoJogo.aumentarTurno()
 
-            if self.estadoJogo.contadorTurno == 11: #Iniciar jogada
+            print(self.estadoJogo.contadorTurno)
+
+            if self.estadoJogo.contadorTurno == 10: #Iniciar jogada
                 self.redistribuicaoCarta()
 
             #FAZ VERIFICAÇÃO DE VITÓRIA DE JOGO

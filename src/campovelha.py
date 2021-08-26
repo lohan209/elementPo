@@ -40,12 +40,12 @@ class Campo():
         ]
 
     def inserirCartaCampo(self, pos, elemento, level):
-        campo.posicoesJ1[pos].elemento = elemento
-        campo.posicoesJ1[pos].level = level
+        self.posicoesJ1[pos].elemento = elemento
+        self.posicoesJ1[pos].level = level
 
     def inserirCartaCampo2(self, pos, elemento, level):
-        campo.posicoesJ2[pos].elemento = elemento
-        campo.posicoesJ2[pos].level = level
+        self.posicoesJ2[pos].elemento = elemento
+        self.posicoesJ2[pos].level = level
 
     def analisePosicoes(self):
         print("Entrou na analisePosicoes")
