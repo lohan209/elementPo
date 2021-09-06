@@ -6,6 +6,7 @@
 2. As cartas de cada elemento são únicas e tem 5 níveis: Fogo 1, Fogo 2, Fogo 3, etc.
 3. A primeira regra do jogo é a verificação de elementos. Sendo Fogo ganha de Ar, Ar ganha de Terra, Terra ganha de Água e Água ganha de fogo.
 4. Caso não tenha um elemento predominante, é utilizado o nível das cartas para definir o vencedor. Ex: Fogo 5 > Terra 4.
+5. Isso acontece sempre que há escolha de campo de batalha em comum. Caso escolha um campo que não tenha outra carta, não acontece a batalha nesse turno.
 
 Para conseguir rodar o jogo, são necessário as seguintes configurações:
 
