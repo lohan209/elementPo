@@ -15,12 +15,18 @@ class Jogador():
     def definirCarta(self, cartaEscolhida, cartaRemover):
         #verificar se a carta escolhida é o jogador 1 ou 2, para definir qual será o próximo turno
         if cartaEscolhida <= 5:
-            self.cartaDaVez = self.cartas[cartaEscolhida - 1]
+            self.salvarCarta(cartaEscolhida, 1)
 
         else:
-            self.cartaDaVez = self.cartas[cartaEscolhida - 6]
+            self.salvarCarta(cartaEscolhida, 6)
 
-        cartaRemover.setEnabled(False) #desabilitar botão que representa a carta das opções
+        self.desabilitarCarta(cartaRemover) #desabilitar botão que representa a carta das opções
+
+    def salvarCarta(self, cartaEscolhida, intApoio):
+        self.cartaDaVez = self.cartas[cartaEscolhida - intApoio]
+
+    def desabilitarCarta(self, cartaRemover):
+        cartaRemover.setEnabled(False)
 
     def definirCampo(self, jogadorDaVez, campo, pos):
         if jogadorDaVez == 1:

@@ -48,8 +48,6 @@ class Campo():
         self.posicoesJ2[pos].level = level
 
     def analisePosicoes(self):
-        print("Entrou na analisePosicoes")
-
         #verificando vertical 1
         if self.posicoesOcupadas[0] == 1 and self.posicoesOcupadas[1] == 1 and self.posicoesOcupadas[2] == 1:
             return(1)
@@ -101,12 +99,13 @@ class Campo():
         #verificando velha
         else:
             count = 0
+            count2 = 0
 
             while count < 9:
                 if self.posicoesOcupadas[count] != 0:
-                    count = count + 1
-
-            if count == 9:
+                    count2 = count2 + 1
+                count = count + 1
+            if count2 == 9:
                 return (3)
             else:
                 return (0)
@@ -137,17 +136,19 @@ class Campo():
         #verificação de nível
         if levelCarta1 > levelCarta2:
             print("Vitória jogador 1")
+            print(elementoCarta1+"; "+str(levelCarta1)+" > "+elementoCarta2+"; "+str(levelCarta2))
             self.posicoesOcupadas[pos] = 1
-            print(pos)
             return int(pos)
 
         elif levelCarta2 > levelCarta1:
             print("Vitória jogador 2")
+            print(elementoCarta2+"; "+str(levelCarta2)+" > "+elementoCarta1+"; "+str(levelCarta1))
             self.posicoesOcupadas[pos] = 2
             return int(pos)
 
         else:
             print("Empate")
+            print(elementoCarta1+"; "+str(levelCarta1)+" = "+elementoCarta2+"; "+str(levelCarta2))
             self.posicoesJ1[pos] = cartas.Cartas("",0)
             self.posicoesJ2[pos] = cartas.Cartas("",0)
             return 400

@@ -59,7 +59,6 @@ class Baralho():
                 posicaoValida = True
 
     def dividirCartar(self, jogador1, jogador2, cartasDoJogo):
-        print(cartasDoJogo)
         i = 0
         while i < 5:
             jogador1.cartas.append(cartasDoJogo[i])

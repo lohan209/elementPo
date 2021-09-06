@@ -10,7 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_ElementPo(object):
-    def colocarBgImage(self, carta, elemento):
+    '''def colocarBgImage(self, carta, elemento):
         if (elemento == "Fogo"):
             carta.setStyleSheet("background-image: url('./fogo.jfif');"
                             "color: #FFF;"
@@ -26,7 +26,7 @@ class Ui_ElementPo(object):
         elif (elemento == "Terra"):
             carta.setStyleSheet("background-image: url('./terra.jpg');"
                             "color: #FFF;"
-                            "font-weight: bold;")
+                            "font-weight: bold;")'''
 
     def setupUi(self, ElementPo):
         self._translate = QtCore.QCoreApplication.translate
@@ -34,6 +34,7 @@ class Ui_ElementPo(object):
         ElementPo.setObjectName("ElementPo")
         ElementPo.resize(788, 600)
         ElementPo.setMaximumSize(QtCore.QSize(800, 800))
+        ElementPo.setFixedSize(788, 600)
         ElementPo.setAutoFillBackground(False)
         ElementPo.setStyleSheet("")
         self.carta1 = QtWidgets.QPushButton(ElementPo)
@@ -67,9 +68,9 @@ class Ui_ElementPo(object):
         self.carta10.setGeometry(QtCore.QRect(640, 370, 113, 32))
         self.carta10.setObjectName("carta10")
         self.acaoBtn = QtWidgets.QPushButton(ElementPo)
-        self.acaoBtn.setGeometry(QtCore.QRect(250, 480, 291, 61))
+        self.acaoBtn.setGeometry(QtCore.QRect(200, 480, 400, 61))
         font = QtGui.QFont()
-        font.setPointSize(25)
+        font.setPointSize(18)
         self.acaoBtn.setFont(font)
         self.acaoBtn.setStyleSheet("background-color: rgb(220, 220, 220);")
         self.acaoBtn.setObjectName("acaoBtn")
@@ -581,3 +582,13 @@ class Ui_ElementPo(object):
             self.status_jogo.setStyleSheet("color: rgb(245, 211, 179);")
         else:
             self.status_jogo.setStyleSheet("color: rgb(176, 196, 222);")
+
+    def habilitarCampo(self, jogadorDaVez):
+        #verificar se a carta escolhida é o jogador 1 ou 2, para definir qual será o próximo turno
+        if jogadorDaVez == 1:
+            self.esconderCartas1()
+            self.mostrarCampo(1, self.campoDeJogo)
+
+        else:
+            self.esconderCartas2()
+            self.mostrarCampo(2, self.campoDeJogo)
