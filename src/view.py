@@ -10,23 +10,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_ElementPo(object):
-    '''def colocarBgImage(self, carta, elemento):
-        if (elemento == "Fogo"):
-            carta.setStyleSheet("background-image: url('./fogo.jfif');"
-                            "color: #FFF;"
-                            "font-weight: bold;")
-        elif (elemento == "Agua"):
-            carta.setStyleSheet("background-image: url('./agua.jpg');"
-                            "color: #FFF;"
-                            "font-weight: bold;")
-        elif (elemento == "Ar"):
-            carta.setStyleSheet("background-image: url('./ar.jpg');"
-                            "color: #FFF;"
-                            "font-weight: bold;")
-        elif (elemento == "Terra"):
-            carta.setStyleSheet("background-image: url('./terra.jpg');"
-                            "color: #FFF;"
-                            "font-weight: bold;")'''
 
     def setupUi(self, ElementPo):
         self._translate = QtCore.QCoreApplication.translate
@@ -430,18 +413,6 @@ class Ui_ElementPo(object):
         self.carta9.show()
         self.carta10.show()
 
-    def desabilitarBotoes(self):
-        self.carta1.setEnabled(False)
-        self.carta2.setEnabled(False)
-        self.carta3.setEnabled(False)
-        self.carta4.setEnabled(False)
-        self.carta5.setEnabled(False)
-        self.carta6.setEnabled(False)
-        self.carta7.setEnabled(False)
-        self.carta8.setEnabled(False)
-        self.carta9.setEnabled(False)
-        self.carta10.setEnabled(False)
-
     def habilitarBotoes(self):
         self.carta1.setEnabled(True)
         self.carta2.setEnabled(True)
@@ -474,28 +445,6 @@ class Ui_ElementPo(object):
                     btnGroup2[count].show()
 
                 count = count + 1;
-
-    def esconderCampo_J1(self):
-        self.pos_1.hide()
-        self.pos_2.hide()
-        self.pos_3.hide()
-        self.pos_4.hide()
-        self.pos_5.hide()
-        self.pos_6.hide()
-        self.pos_7.hide()
-        self.pos_8.hide()
-        self.pos_9.hide()
-
-    def esconderCampo_J2(self):
-        self.pos_1_J2.hide()
-        self.pos_2_J2.hide()
-        self.pos_3_J2.hide()
-        self.pos_4_J2.hide()
-        self.pos_5_J2.hide()
-        self.pos_6_J2.hide()
-        self.pos_7_J2.hide()
-        self.pos_8_J2.hide()
-        self.pos_9_J2.hide()
 
     #altera o nome do botão de ação para os jogadores conseguirem prosseguir com o jogo
     def alterarBtnAcao(self, tipo):
@@ -565,23 +514,35 @@ class Ui_ElementPo(object):
         self.acaoBtn.setText(self._translate(self.acaoBtn.text(), "Iniciar jogo"))
         self.acaoBtn.setStyleSheet("background-color: light gray;")
 
-    def jogada_J1(self):
-        self.alterarBtnAcao(1)
-        self.esconderCampo_J1()
-        self.alterarLabelStatus(2)
+    def alterarTurno_UI(self, j):
 
-    def jogada_J2(self):
-        self.alterarBtnAcao(0)
-        self.esconderCampo_J2()
-        self.alterarLabelStatus(1)
-
-    def alterarLabelStatus(self, jogadorDaVez):
-
-        self.status_jogo.setText(self._translate(self.status_jogo.text(), "Vez do Jogador " + str(jogadorDaVez)))
-        if jogadorDaVez == 1:
-            self.status_jogo.setStyleSheet("color: rgb(245, 211, 179);")
-        else:
+        if j == 1:
+            self.alterarBtnAcao(1)
+            self.pos_1.hide()
+            self.pos_2.hide()
+            self.pos_3.hide()
+            self.pos_4.hide()
+            self.pos_5.hide()
+            self.pos_6.hide()
+            self.pos_7.hide()
+            self.pos_8.hide()
+            self.pos_9.hide()
+            self.status_jogo.setText(self._translate(self.status_jogo.text(), "Vez do Jogador 2"))
             self.status_jogo.setStyleSheet("color: rgb(176, 196, 222);")
+
+        else:
+            self.alterarBtnAcao(0)
+            self.pos_1_J2.hide()
+            self.pos_2_J2.hide()
+            self.pos_3_J2.hide()
+            self.pos_4_J2.hide()
+            self.pos_5_J2.hide()
+            self.pos_6_J2.hide()
+            self.pos_7_J2.hide()
+            self.pos_8_J2.hide()
+            self.pos_9_J2.hide()
+            self.status_jogo.setText(self._translate(self.status_jogo.text(), "Vez do Jogador 1"))
+            self.status_jogo.setStyleSheet("color: rgb(245, 211, 179);")
 
     def habilitarCampo(self, jogadorDaVez):
         #verificar se a carta escolhida é o jogador 1 ou 2, para definir qual será o próximo turno

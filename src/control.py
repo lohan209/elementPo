@@ -148,7 +148,7 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
             self.Jogador1.reinicioJogada()  # Escolher campo
 
             # alteração de interface para finalizar jogada do jogador 1.
-            self.jogada_J1()  # Escolher campo
+            self.alterarTurno_UI(1)  # Escolher campo
 
         else:
             self.statusBtnAcao(False)
@@ -180,7 +180,7 @@ class Control(QtWidgets.QWidget, view.Ui_ElementPo):
             self.Jogador2.reinicioJogada()
 
             # esconder o campo do jogador 2 e habilitar botão de ação
-            self.jogada_J2()
+            self.alterarTurno_UI(2)
 
         self.estadoJogo.aumentarTurno()
 
